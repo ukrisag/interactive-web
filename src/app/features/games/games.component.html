@@ -1,0 +1,378 @@
+<div class="games-page">
+  <!-- Hero Section -->
+  <section class="games-hero">
+    <div class="container-kpi text-center">
+      <span class="badge-gold">
+        <span class="dot-pulse"></span>
+        3D WebGL Interactive Gaming Engine
+      </span>
+      <h1 class="page-title">มินิเกมประวัติศาสตร์เสมือนจริง 3 มิติ (WebGL)</h1>
+      <p class="page-subtitle">
+        ยกระดับความสนุกด้วยเทคโนโลยี Three.js WebGL กราฟิก 3 มิติสมจริง แสงเงาสะท้อนระดับสตูดิโอ<br class="hidden-mobile">
+        ร่วมสำรวจและสะสมคะแนนตราเกียรติยศแห่งสถาบันพระปกเกล้า
+      </p>
+
+      <!-- Points & Badge Pill -->
+      <div class="points-pill glass-panel">
+        <div class="score-segment">
+          <span class="score-icon">👑</span>
+          <div class="score-meta">
+            <span class="score-label">คะแนนสะสมตราเกียรติยศ</span>
+            <span class="score-val">{{ totalGamePoints }} Points</span>
+          </div>
+        </div>
+        <div class="badge-status">
+          @if (totalGamePoints >= 1500) {
+            <span class="rank-tag gold">🏆 นักประวัติศาสตร์ระดับเชี่ยวชาญ (Master)</span>
+          } @else if (totalGamePoints >= 600) {
+            <span class="rank-tag blue">🥈 นักสืบจดหมายเหตุระดับสูง (Expert)</span>
+          } @else {
+            <span class="rank-tag">🌱 ผู้สำรวจประวัติศาสตร์รุ่นเยาว์ (Explorer)</span>
+          }
+        </div>
+      </div>
+
+      <!-- Game Tabs Navigation -->
+      <div class="games-tab-bar glass-panel">
+        <button
+          class="game-tab-btn"
+          [class.active]="activeGame === 'memory'"
+          (click)="selectGame('memory')"
+        >
+          🎴 เกมที่ 1: การ์ดทองคำ 3D WebGL Memory
+        </button>
+        <button
+          class="game-tab-btn"
+          [class.active]="activeGame === 'hidden'"
+          (click)="selectGame('hidden')"
+        >
+          🕵️‍♂️ เกมที่ 2: นักสืบจดหมายเหตุ 3D ตามล่าสมบัติหลวง
+        </button>
+        <button
+          class="game-tab-btn"
+          [class.active]="activeGame === 'chronology'"
+          (click)="selectGame('chronology')"
+        >
+          ⏳ เกมที่ 3: ปริศนาเรียงกาลเวลา
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- GAME 1: 3D WEBGL ROYAL MEMORY ARENA                                       -->
+  <!-- ========================================================================= -->
+  @if (activeGame === 'memory') {
+    <section class="game-view container-kpi">
+      <div class="game-control-header glass-panel">
+        <div class="control-stats">
+          <div class="stat-pill">
+            <span class="stat-lbl">เวลาที่ใช้</span>
+            <span class="stat-num">{{ memoryTimer }} วินาที</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-lbl">จำนวนครั้งที่คลิก</span>
+            <span class="stat-num">{{ memoryMoves }} ครั้ง</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-lbl">จับคู่สำเร็จ</span>
+            <span class="stat-num text-gold">{{ memoryMatchedPairs }} / 6 คู่</span>
+          </div>
+        </div>
+
+        <button class="btn-secondary btn-restart" (click)="initMemoryGame()">
+          🔄 สลับและเริ่มเกมใหม่
+        </button>
+      </div>
+
+      <!-- Instruction Banner -->
+      <div class="instruction-box">
+        💡 <strong>วิธีเล่น 3D WebGL:</strong> คลิกที่การ์ดทองคำ 3 มิติ เพื่อเปิดดูสัญลักษณ์โบราณ ค้นหาคู่ที่เหมือนกันให้ครบทั้ง 6 คู่!
+      </div>
+
+      <!-- 3D WebGL Canvas Arena -->
+      <div class="webgl-canvas-container glass-panel">
+        <canvas
+          #memoryCanvas
+          (click)="onMemoryCanvasClick($event)"
+          class="webgl-canvas"
+        ></canvas>
+
+        <div class="canvas-watermark-tag">
+          <span>✨ Three.js WebGL Real-time 3D Matrix</span>
+        </div>
+      </div>
+
+      <!-- Latest Matched Fact Drawer -->
+      @if (latestMatchedFact && !memoryCompleted) {
+        <div class="fact-popup glass-card animate-slide-up">
+          <div class="fact-icon">{{ latestMatchedFact.icon }}</div>
+          <div class="fact-content">
+            <h4 class="fact-title">✨ ค้นพบเกร็ดความรู้: {{ latestMatchedFact.name }}</h4>
+            <p class="fact-desc">{{ latestMatchedFact.fact }} (+150 Points)</p>
+          </div>
+        </div>
+      }
+
+      <!-- Completion Banner -->
+      @if (memoryCompleted) {
+        <div class="victory-card glass-panel text-center animate-slide-up">
+          <div class="victory-trophy">🎉 🏆</div>
+          <h2 class="victory-title">ยินดีด้วย! คุณจับคู่การ์ดทองคำ 3 มิติครบทั้ง 6 คู่!</h2>
+          <p class="victory-desc">
+            ใช้เวลาทั้งหมด <strong>{{ memoryTimer }} วินาที</strong> ในการเปิด <strong>{{ memoryMoves }} ครั้ง</strong> (+450 Bonus Points)
+          </p>
+          <div class="victory-actions">
+            <button class="btn-primary" (click)="initMemoryGame()">
+              เล่นอีกรอบ
+            </button>
+            <button class="btn-secondary" (click)="selectGame('hidden')">
+              ไปเล่นภารกิจนักสืบจดหมายเหตุ 3D &rarr;
+            </button>
+          </div>
+        </div>
+      }
+    </section>
+  }
+
+  <!-- ========================================================================= -->
+  <!-- GAME 2: 3D WEBGL ARCHIVAL DETECTIVE ROOM (CHALLENGING DETECTIVE MODE)      -->
+  <!-- ========================================================================= -->
+  @if (activeGame === 'hidden') {
+    <section class="game-view container-kpi">
+      <div class="game-control-header glass-panel">
+        <div class="control-stats">
+          <div class="stat-pill">
+            <span class="stat-lbl">เวลาสืบสวน</span>
+            <span class="stat-num">{{ detectiveTimer }} วินาที</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-lbl">การตรวจสอบ</span>
+            <span class="stat-num">{{ detectiveInspections }} ครั้ง</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-lbl">ค้นพบแล้ว</span>
+            <span class="stat-num text-gold">
+              {{ (hiddenItems | slice:0).filter(i => i.found).length }} / 5 ชิ้น
+            </span>
+          </div>
+        </div>
+
+        <button class="btn-secondary btn-restart" (click)="resetHiddenGame()">
+          🔄 รีเซ็ตการค้นหา
+        </button>
+      </div>
+
+      <!-- Instruction Banner -->
+      <div class="instruction-box">
+        🕵️‍♂️ <strong>ภารกิจนักสืบจดหมายเหตุ:</strong> โบราณวัตถุ 5 ชิ้นถูกซ่อนอยู่อย่างแนบเนียนในห้องจัดแสดง (เช่น ในตู้กระจก, ใต้กี่ทอเสื่อ, บนโต๊ะไม้, หลังฉากกั้น) 
+        <strong>ลากเมาส์หมุนมุมมอง 360°</strong> และ <strong>กดปุ่ม [+] เพื่อซูมเข้าตรวจดูอย่างใกล้ชิด</strong> หรือคลิกรายการด้านขวาเพื่อเปิดอ่าน <strong>"💡 เบาะแสประวัติศาสตร์"</strong>!
+      </div>
+
+      <!-- 3D Room Canvas + HUD Checklist -->
+      <div class="detective-layout">
+        <!-- 3D Room WebGL Canvas Viewport -->
+        <div class="webgl-detective-container glass-panel">
+          <canvas
+            #detectiveCanvas
+            (click)="onDetectiveCanvasClick($event)"
+            (mousedown)="onMouseDown($event)"
+            class="webgl-canvas"
+          ></canvas>
+
+          <!-- 3D Room Toolbar: Drag hint + Zoom Controls -->
+          <div class="detective-viewport-overlay">
+            <div class="drag-orbit-hint">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"></path>
+              </svg>
+              <span>คลิกลากเมาส์เพื่อหมุนกล้อง 360°</span>
+            </div>
+
+            <div class="zoom-controls">
+              <button class="zoom-btn" (click)="zoomCamera(-1.2)" title="ซูมเข้า">
+                🔍+
+              </button>
+              <button class="zoom-btn" (click)="zoomCamera(1.2)" title="ซูมออก">
+                🔍-
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Checklist of Items to Find -->
+        <div class="items-checklist-panel glass-panel">
+          <h3 class="checklist-title">📋 แฟ้มโบราณวัตถุที่ต้องค้นหา (5 ชิ้น):</h3>
+          <p class="checklist-sub">คลิกที่การ์ดเพื่ออ่านเบาะแสที่ซ่อน</p>
+          
+          <div class="checklist-items">
+            @for (item of hiddenItems; track item.id) {
+              <div
+                class="check-item-card glass-card"
+                [class.item-completed]="item.found"
+                [class.item-active-clue]="selectedClueItem?.id === item.id"
+                (click)="showClue(item)"
+              >
+                <div class="item-icon-box">{{ item.icon }}</div>
+                <div class="item-text-info">
+                  <span class="item-name">{{ item.nameTh }}</span>
+                  <span class="item-cat">{{ item.categoryTh }}</span>
+                </div>
+                <div class="item-status-icon">
+                  @if (item.found) {
+                    <span class="found-tag">พบแล้ว ✓</span>
+                  } @else {
+                    <span class="clue-btn-tag">💡 ดูเบาะแส</span>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- Active Clue Box -->
+          @if (selectedClueItem && !selectedClueItem.found) {
+            <div class="clue-dossier-card glass-card animate-slide-up mt-4">
+              <div class="clue-header">
+                <span class="clue-badge">💡 เบาะแส: {{ selectedClueItem.nameTh }}</span>
+              </div>
+              <p class="clue-body">{{ selectedClueItem.clueTh }}</p>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Found Item Notification Toast -->
+      @if (foundItemNotification && !hiddenGameCompleted) {
+        <div class="fact-popup glass-card animate-slide-up mt-4">
+          <div class="fact-icon">{{ foundItemNotification.icon }}</div>
+          <div class="fact-content">
+            <h4 class="fact-title">🎉 ยอดเยี่ยม! ค้นพบ "{{ foundItemNotification.nameTh }}" ในห้อง 3D</h4>
+            <p class="fact-desc">{{ foundItemNotification.descriptionTh }} (+250 Points)</p>
+          </div>
+        </div>
+      }
+
+      <!-- All Found Victory -->
+      @if (hiddenGameCompleted) {
+        <div class="victory-card glass-panel text-center animate-slide-up mt-4">
+          <div class="victory-trophy">🕵️‍♂️ 🎖️ 🌟</div>
+          <h2 class="victory-title">สุดยอดสายตานักสืบ! คุณค้นพบโบราณวัตถุครบทั้ง 5 ชิ้น!</h2>
+          <p class="victory-desc">
+            ใช้เวลาสืบสวน <strong>{{ detectiveTimer }} วินาที</strong> ตรวจสอบ <strong>{{ detectiveInspections }} ครั้ง</strong> (+600 Bonus Points)
+          </p>
+          <div class="victory-actions">
+            <button class="btn-primary" (click)="resetHiddenGame()">
+              เล่นใหม่อีกครั้ง
+            </button>
+            <button class="btn-secondary" (click)="selectGame('chronology')">
+              ไปเล่นเกมเรียงไทม์ไลน์กาลเวลา &rarr;
+            </button>
+          </div>
+        </div>
+      }
+    </section>
+  }
+
+  <!-- ========================================================================= -->
+  <!-- GAME 3: CHRONOLOGY TIMELINE CHALLENGE                                     -->
+  <!-- ========================================================================= -->
+  @if (activeGame === 'chronology') {
+    <section class="game-view container-kpi">
+      <div class="game-control-header glass-panel">
+        <div class="control-stats">
+          <div class="stat-pill">
+            <span class="stat-lbl">ภารกิจ</span>
+            <span class="stat-num">เรียงลำดับเหตุการณ์ประวัติศาสตร์</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-lbl">คะแนน</span>
+            <span class="stat-num text-gold">
+              {{ chronologyChecked ? chronologyScore + ' / 100 คะแนน' : 'รอการตรวจ' }}
+            </span>
+          </div>
+        </div>
+
+        <button class="btn-secondary btn-restart" (click)="initChronologyGame()">
+          🔄 สลับลำดับใหม่
+        </button>
+      </div>
+
+      <!-- Instruction Banner -->
+      <div class="instruction-box">
+        ⏳ <strong>วิธีเล่น:</strong> กดปุ่มลูกศร <strong>[▲ ขึ้น]</strong> หรือ <strong>[▼ ลง]</strong> เพื่อเรียงลำดับ 5 เหตุการณ์สำคัญจากอดีตสู่ปัจจุบัน (พ.ศ. น้อยไปมาก) แล้วกดปุ่ม "ตรวจคำตอบ"!
+      </div>
+
+      <!-- Chronology List Items -->
+      <div class="chronology-list">
+        @for (item of userChronology; track item.id; let idx = $index) {
+          <div
+            class="chronology-card glass-panel"
+            [class.correct-pos]="chronologyChecked && item.order === (idx + 1)"
+            [class.wrong-pos]="chronologyChecked && item.order !== (idx + 1)"
+          >
+            <div class="card-order-badge">{{ idx + 1 }}</div>
+            <div class="card-icon-emoji">{{ item.icon }}</div>
+            <div class="card-chron-details">
+              <div class="chron-heading-row">
+                <span class="chron-title">{{ item.titleTh }}</span>
+                @if (chronologyChecked) {
+                  <span class="chron-year-badge">{{ item.yearTh }}</span>
+                }
+              </div>
+              <p class="chron-desc">{{ item.descriptionTh }}</p>
+            </div>
+
+            <!-- Up / Down Shift Buttons -->
+            <div class="shift-buttons">
+              <button
+                class="btn-shift"
+                (click)="moveItem(idx, 'up')"
+                [disabled]="idx === 0 || chronologyChecked"
+                title="เลื่อนขึ้น"
+              >
+                ▲
+              </button>
+              <button
+                class="btn-shift"
+                (click)="moveItem(idx, 'down')"
+                [disabled]="idx === userChronology.length - 1 || chronologyChecked"
+                title="เลื่อนลง"
+              >
+                ▼
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Submit / Check Button -->
+      <div class="chronology-actions text-center mt-4">
+        @if (!chronologyChecked) {
+          <button class="btn-primary btn-large" (click)="checkChronology()">
+            🔍 ตรวจคำตอบและเฉลยไทม์ไลน์
+          </button>
+        } @else {
+          <div class="victory-card glass-panel text-center animate-slide-up">
+            <div class="victory-trophy">{{ chronologyScore >= 80 ? '🎖️ 👏' : '💡 📖' }}</div>
+            <h2 class="victory-title">คุณได้คะแนน {{ chronologyScore }} / 100 คะแนน</h2>
+            <p class="victory-desc">
+              @if (chronologyScore === 100) {
+                สมบูรณ์แบบ! คุณเรียงลำดับเหตุการณ์ประวัติศาสตร์ได้ถูกต้องครบถ้วนทุกข้อ
+              } @else {
+                สังเกตแถบสีเขียวคือตำแหน่งที่ถูกต้อง และแถบปี พ.ศ. ที่แสดงให้เห็นลำดับที่แท้จริง
+              }
+            </p>
+            <div class="victory-actions">
+              <button class="btn-primary" (click)="initChronologyGame()">
+                ลองเรียงลำดับใหม่อีกครั้ง
+              </button>
+              <a routerLink="/workshops" class="btn-secondary">
+                ไปทำควิซรับเกียรติบัตร &rarr;
+              </a>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+  }
+</div>

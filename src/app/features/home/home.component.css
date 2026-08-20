@@ -1,0 +1,720 @@
+/* ==========================================================================
+   APPLE DESIGN SYSTEM HOMEPAGE STYLING (2026 APPLE.COM STANDARD)
+   ========================================================================== */
+
+/* Top Scroll Reading Progress Bar */
+.scroll-progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.05);
+  z-index: 1000;
+}
+
+.scroll-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #d4af37, #fef08a, #2997ff);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.7);
+  transition: width 0.1s linear;
+}
+
+.home-page {
+  display: flex;
+  flex-direction: column;
+  gap: 8rem;
+  padding-bottom: 8rem;
+  overflow-x: hidden;
+  background-color: #000000;
+}
+
+.container-apple {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ==========================================================================
+   1. APPLE KEYNOTE HERO SECTION
+   ========================================================================== */
+.hero-apple-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8.5rem 0 4rem;
+  background: radial-gradient(circle at 50% 25%, rgba(212, 175, 55, 0.14) 0%, rgba(0, 0, 0, 0) 65%);
+}
+
+.hero-backdrop-glow {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1100px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.16) 0%, rgba(0, 0, 0, 0) 70%);
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-center-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 3.2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-typography {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  max-width: 980px;
+}
+
+/* Speaking Wavelets on Narration Button */
+.speaking-wavelets {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.speaking-wavelets span {
+  width: 3px;
+  height: 14px;
+  background: var(--gold-300);
+  border-radius: 3px;
+  animation: waveAnim 0.8s infinite ease-in-out alternate;
+}
+.speaking-wavelets span:nth-child(2) { animation-delay: 0.2s; height: 18px; }
+.speaking-wavelets span:nth-child(3) { animation-delay: 0.4s; height: 12px; }
+
+@keyframes waveAnim {
+  0% { transform: scaleY(0.4); }
+  100% { transform: scaleY(1.2); }
+}
+
+/* Monumental Apple Showcase Card */
+.monumental-portrait-stage {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+}
+
+.monumental-frame {
+  position: relative;
+  border-radius: 36px;
+  padding: 0.85rem;
+  background: #161617;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 40px 90px -15px rgba(0, 0, 0, 0.9);
+  transition: transform 0.5s var(--ease-apple), box-shadow 0.5s;
+}
+
+.monumental-frame:hover {
+  transform: translateY(-6px);
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 50px 110px -15px rgba(0, 0, 0, 0.95), 0 0 50px rgba(212, 175, 55, 0.25);
+}
+
+/* Carousel Slides Container */
+.carousel-slides-container {
+  position: relative;
+  width: 100%;
+  height: 840px;
+  border-radius: 28px;
+  overflow: hidden;
+}
+
+.carousel-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 0.8s var(--ease-apple), transform 0.8s var(--ease-apple);
+  pointer-events: none;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.monumental-royal-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  filter: brightness(0.98) contrast(1.04);
+}
+
+.monumental-gradient-vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
+}
+
+/* Carousel Navigation Arrows */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: rgba(18, 18, 20, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.25s var(--ease-apple);
+  opacity: 0.8;
+}
+
+.carousel-arrow:hover {
+  opacity: 1;
+  background: rgba(212, 175, 55, 0.35);
+  border-color: var(--gold-300);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.prev-arrow {
+  left: 2rem;
+}
+
+.next-arrow {
+  right: 2rem;
+}
+
+/* Floating Glass Overlay Bar on Monumental Banner */
+.monumental-overlay-bar {
+  position: absolute;
+  bottom: 2.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 94%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.1rem 2.2rem;
+  border-radius: 22px;
+  background: rgba(18, 18, 20, 0.82);
+  backdrop-filter: saturate(180%) blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+  z-index: 2;
+}
+
+.overlay-left {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  text-align: left;
+}
+
+.royal-seal-badge {
+  font-family: var(--font-royal);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gold-300);
+  background: rgba(212, 175, 55, 0.18);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  padding: 0.35rem 0.85rem;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.overlay-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.overlay-name {
+  font-family: var(--font-royal);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.overlay-years {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.overlay-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Carousel Indicator Dots */
+.carousel-dots-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-apple);
+}
+
+.carousel-dot.active {
+  width: 28px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #d4af37, #fef08a);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+}
+
+/* ==========================================================================
+   2. DEDICATED HISTORICAL METRICS SECTION (COMFORTABLE READING)
+   ========================================================================== */
+.section-metrics-dedicated {
+  position: relative;
+}
+
+.metrics-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.metric-bento-card {
+  padding: 2.2rem 1.8rem;
+  background: #161617;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  transition: transform 0.4s var(--ease-apple), border-color 0.4s, box-shadow 0.4s;
+}
+
+.metric-bento-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.15);
+}
+
+.metric-icon-wrap {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.metric-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.metric-big-num {
+  font-family: var(--font-royal);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.metric-bold-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--gold-300);
+}
+
+.metric-subtext {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-top: 0.25rem;
+}
+
+/* ==========================================================================
+   3. APPLE FULL-BLEED CHAPTER SHOWCASES
+   ========================================================================== */
+.apple-chapter-section {
+  position: relative;
+}
+
+.chapter-card-wrapper {
+  position: relative;
+  width: 100%;
+  height: 860px;
+  border-radius: 36px;
+  overflow: hidden;
+  background: #161617;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chapter-img-bg {
+  position: absolute;
+  top: -15%;
+  left: 0;
+  width: 100%;
+  height: 130%;
+  will-change: transform;
+  transition: transform 0.1s ease-out;
+}
+
+.chapter-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.92) contrast(1.05);
+}
+
+.chapter-content-overlay {
+  position: absolute;
+  bottom: 3.5rem;
+  right: 3.5rem;
+  max-width: 560px;
+  padding: 2.8rem;
+  border-radius: 28px;
+  background: rgba(18, 18, 20, 0.85);
+  backdrop-filter: saturate(180%) blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.chapter-content-overlay.left-side {
+  right: auto;
+  left: 3.5rem;
+}
+
+.chapter-title {
+  font-family: var(--font-thai);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.chapter-description {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.chapter-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-top: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   4. APPLE BENTO GRID (6-ITEM 3D ARTIFACT SHOWCASE)
+   ========================================================================== */
+.apple-bento-section {
+  position: relative;
+}
+
+.bento-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.bento-headline {
+  font-family: var(--font-thai);
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.bento-subhead {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  max-width: 700px;
+}
+
+.apple-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 2.5rem;
+}
+
+.artifact-bento-card {
+  padding: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.6rem;
+  cursor: pointer;
+  background: #161617;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.4s var(--ease-apple), border-color 0.4s, box-shadow 0.4s;
+}
+
+.artifact-bento-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(212, 175, 55, 0.2);
+}
+
+.bento-card-top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.bento-card-tag {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gold-300);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.bento-card-title {
+  font-family: var(--font-thai);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.bento-card-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.bento-card-media {
+  position: relative;
+  height: 380px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #0d0d0f;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.bento-artifact-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--ease-apple), filter 0.7s;
+  filter: brightness(0.95) contrast(1.05);
+}
+
+.artifact-bento-card:hover .bento-artifact-img {
+  transform: scale(1.08);
+  filter: brightness(1.08) contrast(1.1);
+}
+
+.bento-badge-3d {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--gold-300);
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  padding: 0.25rem 0.65rem;
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+}
+
+.bento-card-bottom {
+  padding-top: 0.4rem;
+}
+
+/* ==========================================================================
+   5. APPLE ROYAL QUOTE
+   ========================================================================== */
+.apple-quote-section {
+  position: relative;
+}
+
+.apple-quote-card {
+  position: relative;
+  padding: 5rem 6rem;
+  border-radius: 36px;
+  text-align: center;
+  background: #161617;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8);
+}
+
+.quote-gold-mark {
+  font-family: var(--font-royal);
+  font-size: 5rem;
+  color: var(--gold-300);
+  line-height: 1;
+  margin-bottom: -1rem;
+  opacity: 0.85;
+}
+
+.apple-quote-text {
+  font-family: var(--font-thai);
+  font-size: clamp(1.3rem, 2.3vw, 1.85rem);
+  font-weight: 400;
+  line-height: 1.7;
+  color: #f5f5f7;
+  margin-bottom: 2.5rem;
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.quote-signature-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+.quote-seal-badge {
+  font-family: var(--font-royal);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--gold-300);
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  padding: 0.35rem 0.85rem;
+  border-radius: 10px;
+}
+
+.quote-author-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 0.2rem;
+}
+
+.quote-author-name {
+  font-family: var(--font-royal);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.quote-author-role {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   6. APPLE ACTION GRID CARDS
+   ========================================================================== */
+.apple-actions-section {
+  position: relative;
+}
+
+.actions-grid-3col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 2rem;
+}
+
+.action-bento-card {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  text-decoration: none;
+  color: inherit;
+  background: #161617;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.4s var(--ease-apple), border-color 0.4s;
+}
+
+.action-bento-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+.action-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.action-num {
+  font-family: var(--font-en);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--gold-300);
+}
+
+.action-title {
+  font-family: var(--font-thai);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.action-desc {
+  font-size: 0.98rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.action-link {
+  align-self: flex-start;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .metrics-bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-slides-container {
+    height: 520px;
+  }
+  .metrics-bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .chapter-card-wrapper {
+    height: 600px;
+  }
+  .chapter-content-overlay,
+  .chapter-content-overlay.left-side {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    max-width: 100%;
+    margin: 1rem;
+  }
+  .apple-quote-card {
+    padding: 3rem 2rem;
+  }
+}

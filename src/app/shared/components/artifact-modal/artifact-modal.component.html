@@ -1,0 +1,141 @@
+<div class="modal-backdrop" (click)="close.emit()">
+  <div class="modal-window glass-panel" (click)="$event.stopPropagation()">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <div class="header-tags">
+        <span class="badge-gold">วัตถุจัดแสดง 3 มิติ</span>
+        <span class="era-tag">{{ artifact.provenance }}</span>
+      </div>
+      <button class="close-btn" (click)="close.emit()" aria-label="ปิด">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Modal Content: 2-Columns (3D Canvas + Deep Details) -->
+    <div class="modal-body">
+      <!-- Left: Interactive 3D Canvas -->
+      <div class="canvas-container">
+        <canvas
+          #rendererCanvas
+          (mousedown)="onMouseDown($event)"
+          (touchstart)="onTouchStart($event)"
+          (touchmove)="onTouchMove($event)"
+          (touchend)="onTouchEnd()"
+        ></canvas>
+
+        <!-- 3D Toolbar -->
+        <div class="canvas-toolbar">
+          <button (click)="toggleWireframe()" [class.active]="isWireframe" title="สลับโหมดโครงสร้าง Wireframe">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+            <span>{{ isWireframe ? 'โหมดสีจริง' : 'โครงร่าง 3D' }}</span>
+          </button>
+          <button (click)="zoomIn()" title="ขยาย">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="11" y1="8" x2="11" y2="14"></line>
+              <line x1="8" y1="11" x2="14" y2="11"></line>
+            </svg>
+          </button>
+          <button (click)="zoomOut()" title="ย่อ">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="8" y1="11" x2="14" y2="11"></line>
+            </svg>
+          </button>
+          <button (click)="resetView()" title="รีเซ็ตมุมมอง">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+              <path d="M3 3v5h5"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="drag-hint">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"></path>
+          </svg>
+          <span>ลากเมาส์เพื่อหมุนรอบทิศทาง 360°</span>
+        </div>
+      </div>
+
+      <!-- Right: Detailed Artifact Notes & Hotspots -->
+      <div class="details-pane">
+        <h2 class="artifact-title">{{ artifact.nameTh }}</h2>
+        <p class="artifact-title-en">{{ artifact.nameEn }}</p>
+
+        <!-- Voice Narration Button -->
+        <div class="narration-banner">
+          <button
+            class="voice-btn"
+            (click)="playVoiceNarration()"
+            [class.speaking]="audioService.isNarrationPlaying()"
+          >
+            @if (audioService.isNarrationPlaying()) {
+              <div class="speaking-waves">
+                <span></span><span></span><span></span>
+              </div>
+              <span>กำลังอ่านเสียงบรรยาย...</span>
+            } @else {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+              <span>ฟังเสียงบรรยายประวัติศาสตร์</span>
+            }
+          </button>
+        </div>
+
+        <p class="full-desc">{{ artifact.fullDesc }}</p>
+
+        <!-- Specs Table -->
+        <div class="specs-grid">
+          @if (artifact.dimensions) {
+            <div class="spec-card">
+              <span class="spec-label">ขนาด</span>
+              <span class="spec-value">{{ artifact.dimensions }}</span>
+            </div>
+          }
+          @if (artifact.material) {
+            <div class="spec-card">
+              <span class="spec-label">วัสดุ / เทคนิค</span>
+              <span class="spec-value">{{ artifact.material }}</span>
+            </div>
+          }
+        </div>
+
+        <!-- Hotspots Exploration -->
+        <div class="hotspots-section">
+          <h4 class="section-heading">จุดสังเกตสำคัญในชิ้นงาน (Hotspots):</h4>
+          <div class="hotspots-list">
+            @for (h of artifact.hotspots; track h.title) {
+              <button
+                class="hotspot-chip"
+                [class.active]="activeHotspot?.title === h.title"
+                (click)="selectHotspot(h)"
+              >
+                <span class="chip-dot"></span>
+                <span>{{ h.title }}</span>
+              </button>
+            }
+          </div>
+
+          @if (activeHotspot) {
+            <div class="hotspot-detail-box glass-card">
+              <h5>{{ activeHotspot.title }}</h5>
+              <p>{{ activeHotspot.description }}</p>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

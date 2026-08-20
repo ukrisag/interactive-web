@@ -1,0 +1,204 @@
+<div class="admin-page">
+  <div class="container-kpi">
+    <!-- Top Header & Export Controls -->
+    <div class="dashboard-header">
+      <div class="header-titles">
+        <div class="kpi-tag-row">
+          <span class="badge-gold">ระบบติดตามสถิติและประเมินผล</span>
+          <span class="cloud-verified-tag">☁️ KPI Cloud Certified</span>
+        </div>
+        <h1 class="page-title">Executive Analytics Dashboard</h1>
+        <p class="page-subtitle">ศูนย์กลางข้อมูลสถิติผู้เข้าชม ความสนใจรายหัวข้อ และผลการประเมินความพึงพอใจ</p>
+      </div>
+
+      <!-- Export Buttons -->
+      <div class="export-actions">
+        <button class="btn-secondary btn-sm" (click)="exportReport(timeRange)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>ส่งออก CSV ({{ timeRange | uppercase }})</span>
+        </button>
+        <button class="btn-secondary btn-sm" (click)="exportFullJSON()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+          <span>ส่งออก JSON ครบชุด</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Metric Cards Grid (Apple Style KPI Widgets) -->
+    <div class="metrics-grid">
+      <!-- Metric 1: Total Visitors -->
+      <div class="metric-card glass-panel">
+        <div class="metric-icon gold-glow-icon">👥</div>
+        <div class="metric-content">
+          <span class="metric-label">ผู้เข้าชมสะสมรวม</span>
+          <h2 class="metric-val">{{ analyticsService.totalVisitorsCount() | number }}</h2>
+          <span class="metric-trend positive">↑ +28.4% จากปีก่อนหน้า</span>
+        </div>
+      </div>
+
+      <!-- Metric 2: Today Visitors -->
+      <div class="metric-card glass-panel">
+        <div class="metric-icon blue-glow-icon">📅</div>
+        <div class="metric-content">
+          <span class="metric-label">ผู้เข้าชมวันนี้</span>
+          <h2 class="metric-val">{{ analyticsService.todayVisitorsCount() | number }}</h2>
+          <span class="metric-trend positive">↑ +14.2% จากค่าเฉลี่ยสัปดาห์</span>
+        </div>
+      </div>
+
+      <!-- Metric 3: Live Concurrent Users -->
+      <div class="metric-card glass-panel">
+        <div class="metric-icon green-glow-icon">
+          <span class="live-dot-large"></span>
+        </div>
+        <div class="metric-content">
+          <span class="metric-label">กำลังเข้าชมขณะนี้ (Live)</span>
+          <h2 class="metric-val text-green">{{ analyticsService.liveVisitorsCount() }}</h2>
+          <span class="metric-trend live-status">Session Real-time Active</span>
+        </div>
+      </div>
+
+      <!-- Metric 4: Avg Dwell Time -->
+      <div class="metric-card glass-panel">
+        <div class="metric-icon purple-glow-icon">⏱️</div>
+        <div class="metric-content">
+          <span class="metric-label">เวลาเข้าชมเฉลี่ย</span>
+          <h2 class="metric-val">{{ analyticsService.averageDwellMinutes() }} นาที</h2>
+          <span class="metric-trend">สูงกว่าเกณฑ์มาตรฐาน 4.2 นาที</span>
+        </div>
+      </div>
+
+      <!-- Metric 5: Overall Satisfaction -->
+      <div class="metric-card glass-panel">
+        <div class="metric-icon gold-glow-icon">⭐</div>
+        <div class="metric-content">
+          <span class="metric-label">ความพึงพอใจเฉลี่ย</span>
+          <h2 class="metric-val">{{ surveyService.averageRatings().overall }} / 5.00</h2>
+          <span class="metric-trend positive">ระดับดีเยี่ยม (Excellent)</span>
+        </div>
+      </div>
+
+      <!-- Metric 6: NPS Score -->
+      <div class="metric-card glass-panel">
+        <div class="metric-icon blue-glow-icon">🏆</div>
+        <div class="metric-content">
+          <span class="metric-label">Net Promoter Score (NPS)</span>
+          <h2 class="metric-val">+{{ surveyService.npsScore() }}%</h2>
+          <span class="metric-trend positive">ระดับ World-Class Loyals</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Chart Section: Time-Series Line / Bar -->
+    <div class="chart-section glass-panel">
+      <div class="chart-header">
+        <div class="chart-titles">
+          <h3 class="chart-heading">กราฟสถิติผู้เข้าชมนิทรรศการ</h3>
+          <p class="chart-sub">แสดงแนวโน้มจำนวนผู้เข้าชมและการเติบโตอย่างต่อเนื่อง</p>
+        </div>
+
+        <!-- Range Filter Buttons -->
+        <div class="range-filters">
+          <button
+            class="range-btn"
+            [class.active]="timeRange === 'daily'"
+            (click)="setTimeRange('daily')"
+          >
+            รายวัน (30 วัน)
+          </button>
+          <button
+            class="range-btn"
+            [class.active]="timeRange === 'monthly'"
+            (click)="setTimeRange('monthly')"
+          >
+            รายเดือน (12 เดือน)
+          </button>
+          <button
+            class="range-btn"
+            [class.active]="timeRange === 'yearly'"
+            (click)="setTimeRange('yearly')"
+          >
+            รายปี (5 ปี)
+          </button>
+        </div>
+      </div>
+
+      <div class="canvas-chart-wrapper">
+        <canvas #visitorsChart></canvas>
+      </div>
+    </div>
+
+    <!-- 2-Columns: Heatmap Ranking + Satisfaction Radar -->
+    <div class="dashboard-duo-grid">
+      <!-- Left: Exhibit & Topic Engagement Heatmap -->
+      <div class="heatmap-card glass-panel">
+        <div class="card-header-flex">
+          <div>
+            <h3 class="chart-heading">ความสนใจรายหัวข้อ (Topic Heatmap)</h3>
+            <p class="chart-sub">อันดับโซนและชิ้นงาน 3D ที่มีผู้เข้าชมและมีส่วนร่วมสูงสุด</p>
+          </div>
+          <button class="btn-text-export" (click)="exportReport('heatmap')">
+            ส่งออกอันดับ CSV
+          </button>
+        </div>
+
+        <div class="heatmap-list">
+          @for (item of analyticsService.topicHeatmap(); track item.id; let idx = $index) {
+            <div class="heatmap-item">
+              <div class="item-meta">
+                <span class="item-rank">0{{ idx + 1 }}</span>
+                <div class="item-details">
+                  <span class="item-name">{{ item.name }}</span>
+                  <span class="item-category">{{ item.category }} • เฉลี่ย {{ item.avgDwellSec }} วินาที</span>
+                </div>
+                <span class="item-hits">{{ item.visits | number }} ครั้ง</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" [style.width.%]="item.percentage"></div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Right: Satisfaction Breakdown Radar & Recent Comments -->
+      <div class="satisfaction-panel glass-panel">
+        <h3 class="chart-heading">ผลการประเมิน 4 มิติ (Radar Evaluation)</h3>
+        <p class="chart-sub">สรุปผลการประเมินจากผู้เข้าชมทั้งหมด {{ surveyService.totalSurveys() }} รายการ</p>
+
+        <div class="radar-chart-wrapper">
+          <canvas #ratingsRadarChart></canvas>
+        </div>
+
+        <!-- Recent Feedback Stream -->
+        <div class="feedbacks-stream">
+          <h4 class="stream-title">💬 ข้อคิดเห็นล่าสุดจากผู้เข้าชม</h4>
+          <div class="comments-list">
+            @for (fb of surveyService.responses() | slice:0:3; track fb.id) {
+              <div class="comment-bubble glass-card">
+                <div class="bubble-header">
+                  <span class="bubble-user">
+                    @if (fb.visitorType === 'student') { 🎓 นักศึกษา }
+                    @else if (fb.visitorType === 'researcher') { 📚 นักวิจัย }
+                    @else if (fb.visitorType === 'kpi_staff') { 🏛️ บุคลากร สถาบันฯ }
+                    @else { 👤 ประชาชนทั่วไป }
+                  </span>
+                  <span class="bubble-date">{{ fb.createdAt }}</span>
+                </div>
+                <p class="bubble-text">"{{ fb.comment }}"</p>
+                <div class="bubble-score">ความประทับใจ: {{ fb.favoriteZone }} (คะแนน {{ fb.ratingVisual }}/5 ★)</div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

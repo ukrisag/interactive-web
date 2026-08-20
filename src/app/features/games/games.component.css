@@ -1,0 +1,564 @@
+/* ==========================================================================
+   3D WEBGL INTERACTIVE MINI-GAMES STYLING (APPLE AESTHETICS)
+   ========================================================================== */
+
+.games-page {
+  padding: 8.5rem 0 8rem;
+  min-height: 100vh;
+}
+
+.games-hero {
+  margin-bottom: 3.5rem;
+}
+
+.points-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.75rem 1.75rem;
+  border-radius: 9999px;
+  margin: 1.5rem 0 1.25rem;
+  border: 1px solid var(--border-gold);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 15px var(--gold-glow);
+}
+
+.score-segment {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.score-icon {
+  font-size: 1.6rem;
+}
+
+.score-meta {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.score-label {
+  font-size: 0.72rem;
+  color: var(--text-subtle);
+}
+
+.score-val {
+  font-family: var(--font-en);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--gold-300);
+}
+
+.rank-tag {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.8rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+
+.rank-tag.gold {
+  background: rgba(212, 175, 55, 0.2);
+  color: var(--gold-200);
+  border: 1px solid var(--border-gold);
+}
+
+.rank-tag.blue {
+  background: rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+/* Tabs */
+.games-tab-bar {
+  display: inline-flex;
+  gap: 0.4rem;
+  padding: 0.45rem;
+  border-radius: 9999px;
+  max-width: 95vw;
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+.game-tab-btn {
+  padding: 0.65rem 1.25rem;
+  border-radius: 9999px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.game-tab-btn:hover {
+  color: #ffffff;
+}
+
+.game-tab-btn.active {
+  background: linear-gradient(135deg, #d4af37, #b89326);
+  color: #070709;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+/* Control Header & Instructions */
+.game-control-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-radius: 18px;
+  margin-bottom: 1.25rem;
+}
+
+.control-stats {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.stat-pill {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-lbl {
+  font-size: 0.72rem;
+  color: var(--text-subtle);
+}
+
+.stat-num {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.text-gold {
+  color: var(--gold-300);
+}
+
+.btn-restart {
+  padding: 0.45rem 1rem;
+  font-size: 0.82rem;
+}
+
+.instruction-box {
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 12px;
+  padding: 0.85rem 1.25rem;
+  font-size: 0.88rem;
+  color: #f1f5f9;
+  margin-bottom: 1.75rem;
+  line-height: 1.6;
+}
+
+/* ========================================================================= */
+/* 1. 3D WEBGL MEMORY CANVAS ARENA                                           */
+/* ========================================================================= */
+.webgl-canvas-container {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  height: 560px;
+  margin: 0 auto;
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid var(--border-gold);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(212, 175, 55, 0.15);
+  background: #06070a;
+}
+
+.webgl-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: pointer;
+}
+
+.canvas-watermark-tag {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  padding: 0.35rem 0.8rem;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--border-gold);
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  color: var(--gold-300);
+  pointer-events: none;
+}
+
+/* Fact Drawer */
+.fact-popup {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-gold);
+  background: rgba(14, 18, 28, 0.95);
+  margin-top: 2rem;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fact-icon {
+  font-size: 2.5rem;
+}
+
+.fact-title {
+  font-size: 1.05rem;
+  color: var(--gold-300);
+  margin-bottom: 0.25rem;
+}
+
+.fact-desc {
+  font-size: 0.92rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+}
+
+/* Victory Card */
+.victory-card {
+  padding: 3rem 2.5rem;
+  border-radius: 28px;
+  border: 1px solid var(--border-gold);
+  max-width: 1100px;
+  margin: 2.5rem auto 0;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px var(--gold-glow);
+}
+
+.victory-trophy {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.victory-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.victory-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 1.75rem;
+}
+
+.victory-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ========================================================================= */
+/* 2. 3D WEBGL ARCHIVAL DETECTIVE ROOM                                       */
+/* ========================================================================= */
+.detective-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  max-width: 1560px;
+  margin: 0 auto;
+}
+
+@media (min-width: 960px) {
+  .detective-layout {
+    grid-template-columns: 1fr 400px;
+    gap: 2.5rem;
+  }
+}
+
+.webgl-detective-container {
+  position: relative;
+  width: 100%;
+  height: 580px;
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid var(--border-gold);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(212, 175, 55, 0.15);
+  background: #0f172a;
+}
+
+.detective-viewport-overlay {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+}
+
+.drag-orbit-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  color: var(--gold-300);
+}
+
+.drag-orbit-hint svg {
+  width: 14px;
+  height: 14px;
+}
+
+.zoom-controls {
+  display: flex;
+  gap: 0.5rem;
+  pointer-events: auto;
+}
+
+.zoom-btn {
+  padding: 0.4rem 0.85rem;
+  background: rgba(14, 18, 28, 0.85);
+  border: 1px solid var(--border-gold);
+  border-radius: 9999px;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.zoom-btn:hover {
+  background: rgba(212, 175, 55, 0.3);
+}
+
+/* Checklist Panel */
+.items-checklist-panel {
+  padding: 1.75rem;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.checklist-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 0.25rem;
+}
+
+.checklist-sub {
+  font-size: 0.78rem;
+  color: var(--text-subtle);
+  margin-bottom: 1.25rem;
+}
+
+.checklist-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.check-item-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.9rem 1.15rem;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.check-item-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.check-item-card.item-active-clue {
+  border-color: var(--gold-400);
+  background: rgba(212, 175, 55, 0.15);
+}
+
+.check-item-card.item-completed {
+  border-color: rgba(34, 197, 94, 0.4);
+  background: rgba(34, 197, 94, 0.12);
+}
+
+.item-icon-box {
+  font-size: 1.6rem;
+}
+
+.item-text-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.item-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.item-cat {
+  font-size: 0.72rem;
+  color: var(--text-subtle);
+}
+
+.item-status-icon {
+  font-size: 0.75rem;
+}
+
+.found-tag {
+  color: #4ade80;
+  font-weight: 600;
+}
+
+.clue-btn-tag {
+  color: var(--gold-300);
+  font-weight: 500;
+}
+
+/* Clue Dossier Card */
+.clue-dossier-card {
+  padding: 1.25rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-gold);
+  background: rgba(212, 175, 55, 0.08);
+}
+
+.clue-badge {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--gold-300);
+}
+
+.clue-body {
+  font-size: 0.85rem;
+  color: #f1f5f9;
+  line-height: 1.5;
+  margin-top: 0.5rem;
+}
+
+/* ========================================================================= */
+/* 3. CHRONOLOGY CHALLENGE                                                   */
+/* ========================================================================= */
+.chronology-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.chronology-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.35rem 1.75rem;
+  border-radius: 20px;
+  transition: all 0.3s;
+}
+
+.chronology-card.correct-pos {
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.12);
+}
+
+.chronology-card.wrong-pos {
+  border-color: #f87171;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.card-order-badge {
+  font-family: var(--font-en);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gold-400);
+  width: 32px;
+}
+
+.card-icon-emoji {
+  font-size: 2.2rem;
+}
+
+.card-chron-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.chron-heading-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.chron-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.chron-year-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: var(--gold-400);
+  color: #070709;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+
+.chron-desc {
+  font-size: 0.88rem;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+.shift-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.btn-shift {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+
+.btn-shift:hover:not(:disabled) {
+  background: rgba(212, 175, 55, 0.3);
+  border-color: var(--gold-400);
+}
+
+.btn-shift:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.mt-4 {
+  margin-top: 1.75rem;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s var(--ease-apple);
+}

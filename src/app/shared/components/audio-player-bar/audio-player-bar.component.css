@@ -1,0 +1,125 @@
+.audio-bar-wrapper {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 990;
+  max-width: calc(100vw - 3rem);
+  animation: slideUp 0.3s var(--ease-apple);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.audio-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.15);
+  background: rgba(14, 16, 23, 0.95);
+}
+
+.audio-indicator {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 16px;
+}
+
+.bar-pulse {
+  width: 3px;
+  background: var(--gold-400);
+  border-radius: 2px;
+  animation: barPulse 0.9s infinite alternate;
+}
+
+.p1 { height: 40%; animation-delay: 0.1s; }
+.p2 { height: 100%; animation-delay: 0.3s; }
+.p3 { height: 60%; animation-delay: 0.2s; }
+.p4 { height: 80%; animation-delay: 0.4s; }
+
+@keyframes barPulse {
+  0% { height: 20%; }
+  100% { height: 100%; }
+}
+
+.audio-info {
+  display: flex;
+  flex-direction: column;
+  max-width: 240px;
+}
+
+.audio-status-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.narration-transcript {
+  font-size: 0.7rem;
+  color: var(--gold-300);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.audio-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.volume-box {
+  display: none;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+@media (min-width: 640px) {
+  .volume-box {
+    display: flex;
+  }
+}
+
+.vol-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--text-subtle);
+}
+
+.vol-slider {
+  width: 60px;
+  accent-color: var(--gold-400);
+  cursor: pointer;
+}
+
+.btn-stop-audio {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-subtle);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-stop-audio:hover {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: #ef4444;
+  color: #fca5a5;
+}
+
+.btn-stop-audio svg {
+  width: 12px;
+  height: 12px;
+  fill: currentColor;
+}

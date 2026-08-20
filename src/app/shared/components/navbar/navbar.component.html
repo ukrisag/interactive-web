@@ -1,0 +1,101 @@
+<header class="navbar-wrapper">
+  <nav class="navbar-pill glass-panel">
+    <!-- Brand / Royal Institute Emblem -->
+    <a routerLink="/" (click)="closeMobileMenu()" class="brand-link">
+      <div class="emblem-container">
+        <div class="emblem-ring"></div>
+        <span class="emblem-text">ร.พ.</span>
+      </div>
+      <div class="brand-info">
+        <span class="brand-title">สมเด็จพระนางเจ้ารำไพพรรณีฯ</span>
+        <span class="brand-sub">สถาบันพระปกเกล้า • King Prajadhipok's Institute</span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    <div class="nav-links">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-item">
+        หน้าแรก
+      </a>
+      <a routerLink="/virtual-hall" routerLinkActive="active" class="nav-item">
+        <span class="badge-tag">3D</span>
+        ห้องนิทรรศการ 3 มิติ
+      </a>
+      <a routerLink="/timeline" routerLinkActive="active" class="nav-item">
+        ประวัติศาสตร์มีชีวิต
+      </a>
+      <a routerLink="/workshops" routerLinkActive="active" class="nav-item">
+        กิจกรรมจำลอง
+      </a>
+      <a routerLink="/games" routerLinkActive="active" class="nav-item game-tag">
+        🎮 มินิเกม
+      </a>
+      <a routerLink="/survey" routerLinkActive="active" class="nav-item">
+        แบบประเมิน
+      </a>
+      <a routerLink="/admin-dashboard" routerLinkActive="active" class="nav-item admin-tag">
+        📊 สถิติผู้เข้าชม
+      </a>
+    </div>
+
+    <!-- Right Controls: Live Visitors & Audio Soundscape -->
+    <div class="nav-actions">
+      <!-- Live Counter Pill -->
+      <div class="live-pill" title="จำนวนผู้เข้าชมในขณะนี้">
+        <span class="live-dot"></span>
+        <span class="live-count">{{ analyticsService.liveVisitorsCount() }} คน</span>
+      </div>
+
+      <!-- Ambient Audio Toggle -->
+      <button
+        (click)="audioService.toggleAmbient()"
+        class="sound-btn"
+        [class.playing]="audioService.isAmbientPlaying()"
+        [title]="audioService.isAmbientPlaying() ? 'ปิดเสียงดนตรีคลอ' : 'เปิดดนตรีไทยเดิมประยุกต์'"
+      >
+        @if (audioService.isAmbientPlaying()) {
+          <div class="equalizer">
+            <span class="bar bar-1"></span>
+            <span class="bar bar-2"></span>
+            <span class="bar bar-3"></span>
+          </div>
+          <span class="sound-label">เสียงคลอ</span>
+        } @else {
+          <svg class="sound-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+          <span class="sound-label">เปิดเสียง</span>
+        }
+      </button>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="mobile-menu-btn" (click)="toggleMobileMenu()" aria-label="เมนู">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          @if (!mobileMenuOpen) {
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          } @else {
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          }
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer Menu -->
+  @if (mobileMenuOpen) {
+    <div class="mobile-drawer glass-panel">
+      <a routerLink="/" (click)="closeMobileMenu()" class="mobile-nav-item">หน้าแรก</a>
+      <a routerLink="/virtual-hall" (click)="closeMobileMenu()" class="mobile-nav-item">🏛️ ห้องนิทรรศการ 3 มิติ (3D Virtual Hall)</a>
+      <a routerLink="/timeline" (click)="closeMobileMenu()" class="mobile-nav-item">📜 ประวัติศาสตร์มีชีวิต (Interactive Timeline)</a>
+      <a routerLink="/workshops" (click)="closeMobileMenu()" class="mobile-nav-item">🎨 กิจกรรมจำลอง (Weaving & Quiz Studio)</a>
+      <a routerLink="/games" (click)="closeMobileMenu()" class="mobile-nav-item">🎮 มินิเกมประวัติศาสตร์ (Mini-Games Hub)</a>
+      <a routerLink="/survey" (click)="closeMobileMenu()" class="mobile-nav-item">⭐ แบบประเมินความพึงพอใจ</a>
+      <a routerLink="/admin-dashboard" (click)="closeMobileMenu()" class="mobile-nav-item mobile-admin">📊 แผงสถิติผู้เข้าชม (KPI Admin Dashboard)</a>
+    </div>
+  }
+</header>

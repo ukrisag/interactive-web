@@ -1,0 +1,252 @@
+<div class="workshops-page">
+  <!-- Header -->
+  <section class="workshops-hero">
+    <div class="container-kpi text-center">
+      <span class="badge-gold">100% Interactive Participation</span>
+      <h1 class="page-title">กิจกรรมจำลองและทดสอบองค์ความรู้</h1>
+      <p class="page-subtitle">
+        ร่วมมีส่วนร่วมกับประวัติศาสตร์ผ่านสตูดิโอทอเสื่อจันทบูรจำลอง<br class="hidden-mobile">
+        และแบบทดสอบความรู้ประวัติศาสตร์เพื่อรับเกียรติบัตรดิจิทัล
+      </p>
+
+      <!-- Workshop Tab Selector -->
+      <div class="tabs-control glass-panel">
+        <button
+          class="tab-pill"
+          [class.active]="activeTab === 'weaving'"
+          (click)="setTab('weaving')"
+        >
+          🎋 สตูดิโอทอเสื่อจันทบูรจำลอง
+        </button>
+        <button
+          class="tab-pill"
+          [class.active]="activeTab === 'quiz'"
+          (click)="setTab('quiz')"
+        >
+          🎓 ควิซประวัติศาสตร์ & เกียรติบัตร
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 1: CHANTHABOON MAT WEAVING STUDIO -->
+  @if (activeTab === 'weaving') {
+    <section class="weaving-section container-kpi">
+      <div class="weaving-layout">
+        <!-- Control Palette Sidebar -->
+        <div class="palette-sidebar glass-panel">
+          <h3 class="panel-title">🎨 เลือกสีย้อมธรรมชาติ</h3>
+          <div class="color-palette">
+            @for (c of dyeColors; track c.name) {
+              <button
+                class="color-btn"
+                [class.selected]="selectedColor === c.hex"
+                (click)="selectedColor = c.hex"
+              >
+                <span class="color-swatch" [style.background-color]="c.hex"></span>
+                <div class="color-info">
+                  <span class="color-name">{{ c.name }}</span>
+                  <span class="color-source">{{ c.sourceTh }}</span>
+                </div>
+              </button>
+            }
+          </div>
+
+          <h3 class="panel-title mt-4">📐 แม่ลายโบราณราชสำนัก</h3>
+          <div class="motif-presets">
+            <button class="motif-btn" (click)="applyMotif('royal')">
+              👑 ลายเพชรราชสำนัก
+            </button>
+            <button class="motif-btn" (click)="applyMotif('kaew')">
+              🌸 ลายดอกแก้วจันทบุรี
+            </button>
+            <button class="motif-btn" (click)="applyMotif('checkered')">
+              🏁 ลายขัดสานคลาสสิก
+            </button>
+            <button class="motif-btn btn-clear" (click)="initMatGrid()">
+              🔄 ล้างผืนเสื่อ
+            </button>
+          </div>
+
+          <div class="action-wrap mt-4">
+            <button
+              class="btn-primary w-full"
+              (click)="triggerWeaveAnimation()"
+              [disabled]="isWeavingAnimated"
+            >
+              @if (isWeavingAnimated) {
+                <span>กำลังจำลองการทอกี่...</span>
+              } @else {
+                <span>🚀 สั่งทอเสื่อจำลองแบบ 3D</span>
+              }
+            </button>
+          </div>
+        </div>
+
+        <!-- Interactive Weaving Grid Matrix -->
+        <div class="loom-display glass-panel">
+          <div class="loom-header">
+            <div class="loom-tags">
+              <span class="badge-gold">ผืนเสื่อขนาด 8 x 10 เส้นทอ</span>
+              <span class="loom-hint">คลิกที่ช่องเพื่อแต้มสีย้อมธรรมชาติ</span>
+            </div>
+            <div class="shuttle-indicator" [class.weaving]="isWeavingAnimated">
+              <span class="shuttle-icon">🧵</span>
+              <span>กระสวยทอไม้สัก</span>
+            </div>
+          </div>
+
+          <!-- The Mat Canvas Grid -->
+          <div class="mat-frame">
+            <div class="mat-grid-board">
+              @for (row of matGrid; track $index; let r = $index) {
+                <div
+                  class="mat-row"
+                  [class.woven-highlight]="isWeavingAnimated && r <= wovenRowCount"
+                >
+                  @for (cell of row; track $index; let c = $index) {
+                    <div
+                      class="mat-cell"
+                      [style.background-color]="cell"
+                      (click)="paintCell(r, c)"
+                      [title]="'แถว ' + (r+1) + ', หลัก ' + (c+1)"
+                    ></div>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="loom-footer">
+            <p class="historical-note">
+              💡 <strong>พระราชดำริ:</strong> ทรงนำต้นกกน้ำกร่อยของเมืองจันทบุรีมาพัฒนาเป็นผลิตภัณฑ์หัตถกรรมชั้นสูง สร้างอาชีพที่ยั่งยืนแก่สตรีและครอบครัวชาวจันทบุรีมาจนถึงปัจจุบัน
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  }
+
+  <!-- TAB 2: HISTORICAL QUIZ & CERTIFICATE -->
+  @if (activeTab === 'quiz') {
+    <section class="quiz-section container-kpi">
+      @if (!quizSubmitted) {
+        <div class="quiz-container glass-panel">
+          <div class="quiz-header text-center">
+            <span class="badge-gold">5 คำถามประวัติศาสตร์</span>
+            <h2 class="quiz-title">แบบทดสอบองค์ความรู้นิทรรศการเสมือนจริง</h2>
+            <p class="quiz-desc">ตอบคำถาม 5 ข้อ เพื่อรับประกาศนียบัตรดิจิทัลจากสถาบันพระปกเกล้า</p>
+          </div>
+
+          <div class="questions-list">
+            @for (q of exhibitionService.quiz(); track q.id; let idx = $index) {
+              <div class="question-card glass-card">
+                <div class="q-number">ข้อที่ {{ idx + 1 }} จาก 5</div>
+                <h3 class="q-text">{{ q.questionTh }}</h3>
+                <div class="options-grid">
+                  @for (opt of q.options; track opt; let optIdx = $index) {
+                    <button
+                      class="option-btn"
+                      [class.selected]="quizAnswers[q.id] === optIdx"
+                      (click)="selectQuizOption(q.id, optIdx)"
+                    >
+                      <span class="opt-alpha">{{ ['ก', 'ข', 'ค', 'ง'][optIdx] }}.</span>
+                      <span class="opt-label">{{ opt }}</span>
+                    </button>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+
+          <div class="quiz-submit-bar text-center">
+            <button
+              class="btn-primary btn-submit-quiz"
+              (click)="submitQuiz()"
+            >
+              ส่งคำตอบและตรวจผลคะแนน
+            </button>
+          </div>
+        </div>
+      } @else {
+        <!-- Quiz Result & Certificate Display -->
+        <div class="result-certificate-wrap">
+          <!-- Score Summary Banner -->
+          <div class="score-banner glass-panel text-center">
+            <div class="trophy-icon">🏆</div>
+            <h2 class="score-title">
+              คุณได้คะแนน {{ score }} / 5 คะแนน!
+            </h2>
+            <p class="score-msg">
+              @if (score >= 4) {
+                ยอดเยี่ยมมาก! คุณมีความรู้ความเข้าใจในพระราชประวัติและพระราชกรณียกิจเป็นอย่างดียิ่ง
+              } @else {
+                ยินดีด้วยที่คุณได้ร่วมเรียนรู้ประวัติศาสตร์สำคัญผ่านนิทรรศการเสมือนจริง
+              }
+            </p>
+
+            <div class="name-input-group">
+              <label for="vName">กรอกชื่อ-นามสกุลของคุณเพื่อระบุในเกียรติบัตร:</label>
+              <input
+                id="vName"
+                type="text"
+                [(ngModel)]="visitorName"
+                placeholder="ระบุชื่อ - สกุลของคุณ เช่น นายสิริวัฒน์ ประชาธิปก"
+                class="name-input"
+              />
+            </div>
+          </div>
+
+          <!-- Official KPI Digital Certificate -->
+          <div class="certificate-frame">
+            <div class="certificate-inner">
+              <div class="cert-border-corner top-left"></div>
+              <div class="cert-border-corner top-right"></div>
+              <div class="cert-border-corner bottom-left"></div>
+              <div class="cert-border-corner bottom-right"></div>
+
+              <div class="cert-header">
+                <div class="cert-emblem">ร.พ.</div>
+                <h3 class="cert-inst">สถาบันพระปกเกล้า</h3>
+                <p class="cert-inst-en">KING PRAJADHIPOK'S INSTITUTE</p>
+                <h2 class="cert-title">ประกาศนียบัตร</h2>
+                <p class="cert-subtitle">มอบให้เพื่อแสดงว่า</p>
+              </div>
+
+              <div class="cert-body">
+                <div class="cert-name">{{ visitorName || 'ผู้เข้าร่วมนิทรรศการกิตติมศักดิ์' }}</div>
+                <p class="cert-text">
+                  ได้ผ่านการเรียนรู้และทดสอบองค์ความรู้ในนิทรรศการออนไลน์เสมือนจริง<br>
+                  <strong>"สมเด็จพระนางเจ้ารำไพพรรณี พระบรมราชินีในรัชกาลที่ 7"</strong><br>
+                  ด้วยคะแนน {{ score }} จาก 5 คะแนนเต็ม
+                </p>
+              </div>
+
+              <div class="cert-footer">
+                <div class="cert-sign-box">
+                  <div class="cert-sign-line"></div>
+                  <span class="cert-sign-label">คณะผู้จัดทำนิทรรศการเสมือนจริง</span>
+                  <span class="cert-sign-sub">สถาบันพระปกเกล้า</span>
+                </div>
+                <div class="cert-seal">
+                  <div class="gold-stamp">ตราสถาบันฯ</div>
+                  <span class="cert-date">วันที่ {{ certificateDate }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions: Print / Retry -->
+          <div class="cert-actions text-center">
+            <button class="btn-primary" (click)="printCertificate()">
+              🖨️ พิมพ์ / บันทึกเกียรติบัตร (PDF)
+            </button>
+            <button class="btn-secondary" (click)="resetQuiz()">
+              🔄 ทำแบบทดสอบใหม่อีกครั้ง
+            </button>
+          </div>
+        </div>
+      }
+    </section>
+  }
+</div>

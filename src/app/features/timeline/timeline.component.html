@@ -1,0 +1,175 @@
+<div class="timeline-page">
+  <!-- Top Hero Header -->
+  <section class="timeline-hero">
+    <div class="container-kpi text-center">
+      <span class="badge-gold">Interactive Scrollytelling</span>
+      <h1 class="page-title">ประวัติศาสตร์มีชีวิต</h1>
+      <p class="page-subtitle">
+        ย้อนรอยเส้นทางพระราชประวัติและพระราชกรณียกิจผ่าน 5 ยุคสำคัญ<br class="hidden-mobile">
+        พร้อมระบบเปรียบเทียบภาพจดหมายเหตุและเสียงบรรยายเชิงลึก
+      </p>
+
+      <!-- Sticky Nav Filter Tabs -->
+      <div class="timeline-tabs-wrap">
+        <div class="timeline-tabs glass-panel">
+          @for (era of exhibitionService.eras(); track era.id) {
+            <button
+              class="tab-btn"
+              [class.active]="activeEraId === era.id"
+              (click)="scrollToEra(era.id)"
+            >
+              <span class="tab-num">{{ era.number }}</span>
+              <span class="tab-label">{{ era.titleTh }}</span>
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline Stream Container -->
+  <section class="timeline-stream container-kpi">
+    <div class="timeline-line"></div>
+
+    <div class="eras-list">
+      @for (era of exhibitionService.eras(); track era.id; let idx = $index) {
+        <article
+          [id]="era.id"
+          class="era-block"
+          [class.active-block]="activeEraId === era.id"
+          (mouseenter)="setActiveEra(era.id)"
+        >
+          <!-- Era Node Marker -->
+          <div class="era-marker">
+            <span class="marker-dot"></span>
+            <span class="marker-year">{{ era.yearRange }}</span>
+          </div>
+
+          <!-- Main Era Card -->
+          <div class="era-main-card glass-panel">
+            <div class="era-card-header">
+              <div class="era-header-text">
+                <span class="era-chap-badge">ช่วงที่ {{ era.number }}</span>
+                <h2 class="era-heading">{{ era.titleTh }}</h2>
+                <h3 class="era-subheading">{{ era.subtitle }}</h3>
+              </div>
+
+              <!-- Audio Narration Trigger Button -->
+              <button
+                class="era-audio-btn"
+                (click)="playEraNarration(era)"
+                title="ฟังเสียงบรรยายประจำยุค"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                </svg>
+                <span>เสียงบรรยาย</span>
+              </button>
+            </div>
+
+            <p class="era-body-text">{{ era.description }}</p>
+
+            <!-- Key Highlights List -->
+            <div class="highlights-box">
+              <h4 class="box-title">✨ จุดเด่นสำคัญทางประวัติศาสตร์</h4>
+              <ul class="highlights-list">
+                @for (h of era.highlights; track h) {
+                  <li>{{ h }}</li>
+                }
+              </ul>
+            </div>
+
+            <!-- Historical Quote -->
+            @if (era.quote) {
+              <div class="era-quote-strip">
+                <p class="quote-txt">“{{ era.quote.text }}”</p>
+                <span class="quote-src">— {{ era.quote.source }}</span>
+              </div>
+            }
+
+            <!-- Archival Restoration Interactive Slider -->
+            <div class="archival-restoration-widget glass-card">
+              <div class="widget-header">
+                <span class="widget-badge">🔍 ส่องเปรียบเทียบจดหมายเหตุ</span>
+                <span class="widget-hint">ลากแถบเลื่อนเพื่อเปรียบเทียบภาพขาวดำโบราณ vs ภาพสีฟื้นฟูดิจิทัล</span>
+              </div>
+
+              <div class="slider-comparison-box">
+                <!-- Color Restored Layer -->
+                <div
+                  class="layer color-layer"
+                  [style.clip-path]="'polygon(0 0, ' + restorationSliderValue[era.id] + '% 0, ' + restorationSliderValue[era.id] + '% 100%, 0 100%)'"
+                >
+                  <div class="fake-photo-visual color-tone">
+                    <span class="layer-tag left">ภาพสีฟื้นฟู (AI Restored)</span>
+                    <div class="photo-placeholder-content">
+                      <span class="photo-icon">🏛️</span>
+                      <span class="photo-title">{{ era.titleTh }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Black & White Archival Layer -->
+                <div class="layer bw-layer">
+                  <div class="fake-photo-visual bw-tone">
+                    <span class="layer-tag right">ภาพต้นฉบับจดหมายเหตุ</span>
+                    <div class="photo-placeholder-content">
+                      <span class="photo-icon">📜</span>
+                      <span class="photo-title">{{ era.titleEn }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Range Input Slider -->
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  [(ngModel)]="restorationSliderValue[era.id]"
+                  class="compare-slider-input"
+                  aria-label="เปรียบเทียบภาพจดหมายเหตุ"
+                />
+
+                <!-- Visual Divider Bar -->
+                <div class="slider-divider-line" [style.left.%]="restorationSliderValue[era.id]">
+                  <div class="divider-handle">↔</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Related 3D Artifacts in this Era -->
+            @if (getArtifactsForEra(era.id).length > 0) {
+              <div class="era-artifacts-section">
+                <h4 class="box-title">🏛️ วัตถุจัดแสดง 3 มิติในยุคนี้</h4>
+                <div class="mini-artifacts-grid">
+                  @for (art of getArtifactsForEra(era.id); track art.id) {
+                    <div class="mini-artifact-card glass-card" (click)="openArtifact(art)">
+                      <div class="mini-art-info">
+                        <span class="mini-art-name">{{ art.nameTh }}</span>
+                        <span class="mini-art-cat">{{ art.dimensions || art.provenance }}</span>
+                      </div>
+                      <button class="btn-mini-3d">
+                        สำรวจ 3D
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                          <polyline points="2 17 12 22 22 17"></polyline>
+                          <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                      </button>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+</div>
+
+<!-- Modal 3D Inspector -->
+@if (selectedArtifact) {
+  <app-artifact-modal [artifact]="selectedArtifact" (close)="closeArtifact()"></app-artifact-modal>
+}

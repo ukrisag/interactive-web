@@ -1,0 +1,191 @@
+<div class="survey-page">
+  <div class="container-kpi">
+    <div class="survey-header text-center">
+      <span class="badge-gold">Visitor Evaluation & Feedback</span>
+      <h1 class="page-title">แบบประเมินความพึงพอใจการเข้าชมนิทรรศการ</h1>
+      <p class="page-subtitle">
+        ความคิดเห็นอันมีค่ายิ่งของท่าน จะนำไปพัฒนาและปรับปรุงการจัดแสดงนิทรรศการของสถาบันพระปกเกล้าให้ดียิ่งขึ้น
+      </p>
+    </div>
+
+    @if (!submitted) {
+      <div class="survey-form-card glass-panel">
+        <form (ngSubmit)="submitForm()">
+          <!-- Section 1: Visitor Profile -->
+          <div class="form-section">
+            <h3 class="section-label">1. สถานะของผู้เข้าชม (Visitor Profile)</h3>
+            <div class="visitor-type-grid">
+              <label class="radio-card" [class.checked]="visitorType === 'general'">
+                <input type="radio" name="vType" [(ngModel)]="visitorType" value="general">
+                <span class="radio-title">ประชาชนทั่วไป</span>
+              </label>
+              <label class="radio-card" [class.checked]="visitorType === 'student'">
+                <input type="radio" name="vType" [(ngModel)]="visitorType" value="student">
+                <span class="radio-title">นักเรียน / นักศึกษา</span>
+              </label>
+              <label class="radio-card" [class.checked]="visitorType === 'researcher'">
+                <input type="radio" name="vType" [(ngModel)]="visitorType" value="researcher">
+                <span class="radio-title">ครู / นักวิชาการ / นักวิจัย</span>
+              </label>
+              <label class="radio-card" [class.checked]="visitorType === 'kpi_staff'">
+                <input type="radio" name="vType" [(ngModel)]="visitorType" value="kpi_staff">
+                <span class="radio-title">บุคลากรสถาบันพระปกเกล้า</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Section 2: 4-Dimensional Ratings (5 Stars) -->
+          <div class="form-section">
+            <h3 class="section-label">2. การประเมินความพึงพอใจในมิติต่าง ๆ (1 - 5 ดาว)</h3>
+            
+            <div class="ratings-stack">
+              <!-- Dimension A: Content -->
+              <div class="rating-row glass-card">
+                <div class="rating-info">
+                  <span class="rating-title">ความถูกต้องและความสมบูรณ์ของเนื้อหาประวัติศาสตร์</span>
+                  <span class="rating-sub">ความถูกต้องของพระราชประวัติและจดหมายเหตุ</span>
+                </div>
+                <div class="star-rating">
+                  @for (star of [1, 2, 3, 4, 5]; track star) {
+                    <button
+                      type="button"
+                      class="star-btn"
+                      [class.filled]="ratingContent >= star"
+                      (click)="setRating('content', star)"
+                    >★</button>
+                  }
+                  <span class="score-display">{{ ratingContent }}/5</span>
+                </div>
+              </div>
+
+              <!-- Dimension B: Interactivity -->
+              <div class="rating-row glass-card">
+                <div class="rating-info">
+                  <span class="rating-title">ระบบปฏิสัมพันธ์ 3 มิติ และกิจกรรมจำลอง (Interactivity)</span>
+                  <span class="rating-sub">การหมุน 3D, การจำลองทอเสื่อจันทบูร, และควิซประวัติศาสตร์</span>
+                </div>
+                <div class="star-rating">
+                  @for (star of [1, 2, 3, 4, 5]; track star) {
+                    <button
+                      type="button"
+                      class="star-btn"
+                      [class.filled]="ratingInteractivity >= star"
+                      (click)="setRating('interactivity', star)"
+                    >★</button>
+                  }
+                  <span class="score-display">{{ ratingInteractivity }}/5</span>
+                </div>
+              </div>
+
+              <!-- Dimension C: Visual & Audio Aesthetics -->
+              <div class="rating-row glass-card">
+                <div class="rating-info">
+                  <span class="rating-title">ความสวยงาม ความทันสมัย และระบบเสียง (Aesthetics)</span>
+                  <span class="rating-sub">การออกแบบสไตล์ Apple, ความลื่นไหล และดนตรี/เสียงบรรยาย</span>
+                </div>
+                <div class="star-rating">
+                  @for (star of [1, 2, 3, 4, 5]; track star) {
+                    <button
+                      type="button"
+                      class="star-btn"
+                      [class.filled]="ratingVisual >= star"
+                      (click)="setRating('visual', star)"
+                    >★</button>
+                  }
+                  <span class="score-display">{{ ratingVisual }}/5</span>
+                </div>
+              </div>
+
+              <!-- Dimension D: Ease of Use -->
+              <div class="rating-row glass-card">
+                <div class="rating-info">
+                  <span class="rating-title">ความสะดวกและง่ายต่อการใช้งาน (Ease of Use)</span>
+                  <span class="rating-sub">ความรวดเร็วในการโหลด และความง่ายต่อการนำทาง</span>
+                </div>
+                <div class="star-rating">
+                  @for (star of [1, 2, 3, 4, 5]; track star) {
+                    <button
+                      type="button"
+                      class="star-btn"
+                      [class.filled]="ratingEase >= star"
+                      (click)="setRating('ease', star)"
+                    >★</button>
+                  }
+                  <span class="score-display">{{ ratingEase }}/5</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Favorite Section -->
+          <div class="form-section">
+            <h3 class="section-label">3. โซนนิทรรศการที่ท่านประทับใจมากที่สุด</h3>
+            <select class="custom-select" [(ngModel)]="favoriteZone" name="favZone">
+              @for (z of zoneOptions; track z) {
+                <option [value]="z">{{ z }}</option>
+              }
+            </select>
+          </div>
+
+          <!-- Section 4: NPS (Net Promoter Score) -->
+          <div class="form-section">
+            <h3 class="section-label">4. โอกาสที่ท่านจะแนะนำนิทรรศการนี้แก่ผู้อื่น (คะแนน 0 - 10)</h3>
+            <div class="nps-slider-wrap">
+              <input
+                type="range"
+                min="0"
+                max="10"
+                [(ngModel)]="npsScore"
+                name="nps"
+                class="nps-slider"
+              />
+              <div class="nps-ticks">
+                <span>0 (ไม่แนะนำ)</span>
+                <span class="nps-current-score">{{ npsScore }} คะแนน</span>
+                <span>10 (แนะนำอย่างแน่นอน)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 5: Open Comments -->
+          <div class="form-section">
+            <h3 class="section-label">5. ข้อเสนอแนะเพิ่มเติมเพื่อการปรับปรุง</h3>
+            <textarea
+              class="custom-textarea"
+              rows="4"
+              [(ngModel)]="comment"
+              name="comm"
+              placeholder="พิมพ์ความคิดเห็นหรือความประทับใจของท่านที่นี่..."
+            ></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-submit-row text-center">
+            <button type="submit" class="btn-primary btn-large">
+              ส่งแบบประเมินความพึงพอใจ
+            </button>
+          </div>
+        </form>
+      </div>
+    } @else {
+      <!-- Thank You Message -->
+      <div class="thankyou-card glass-panel text-center">
+        <div class="check-icon">✓</div>
+        <h2 class="thankyou-title">ขอขอบพระคุณสำหรับความคิดเห็นของท่าน</h2>
+        <p class="thankyou-desc">
+          ข้อมูลการประเมินได้ถูกบันทึกลงสู่ระบบสถิติของสถาบันพระปกเกล้าเรียบร้อยแล้ว<br>
+          สถาบันฯ จะนำข้อคิดเห็นไปต่อยอดพัฒนางานวิชาการและการจัดแสดงประวัติศาสตร์สืบไป
+        </p>
+
+        <div class="thankyou-actions">
+          <button class="btn-primary" (click)="resetForm()">
+            ทำแบบประเมินอีกครั้ง
+          </button>
+          <a routerLink="/admin-dashboard" class="btn-secondary">
+            ดูสรุปคะแนนและสถิติภาพรวม
+          </a>
+        </div>
+      </div>
+    }
+  </div>
+</div>

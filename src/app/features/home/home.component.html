@@ -1,0 +1,391 @@
+<!-- Reading Scroll Progress Bar -->
+<div class="scroll-progress-container">
+  <div class="scroll-progress-bar" [style.width.%]="scrollProgress()"></div>
+</div>
+
+<div class="home-page">
+  <!-- ============================================================ -->
+  <!-- 1. APPLE KEYNOTE HERO: INTERACTIVE CAROUSEL STAGE            -->
+  <!-- ============================================================ -->
+  <section class="hero-apple-section">
+    <div class="hero-backdrop-glow"></div>
+
+    <div class="container-apple hero-center-stage">
+      <!-- Apple Eyebrow & Master Headline -->
+      <div class="hero-typography scroll-reveal">
+        <span class="apple-eyebrow">สมเด็จพระนางเจ้ารำไพพรรณี พระบรมราชินีในรัชกาลที่ ๗</span>
+        <h1 class="apple-headline-hero">พระมิ่งขวัญแห่งประชาธิปไตย</h1>
+        <p class="apple-subhead">
+          นิทรรศการออนไลน์เสมือนจริงและจดหมายเหตุเกียรติยศ
+          สมเด็จพระบรมราชินีผู้ทรงเคียงคู่ประชาธิปไตยและทรงอุทิศพระองค์เพื่อปวงชน
+        </p>
+
+        <!-- Apple CTA Action Buttons -->
+        <div class="apple-cta-group">
+          <a routerLink="/virtual-hall" class="btn-apple-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+            <span>เข้าชมนิทรรศการ 3 มิติ</span>
+          </a>
+
+          <button
+            class="btn-apple-secondary"
+            (click)="playHeroBioNarration()"
+            [class.active]="audioService.isNarrationPlaying()"
+          >
+            @if (audioService.isNarrationPlaying()) {
+              <div class="speaking-wavelets">
+                <span></span><span></span><span></span>
+              </div>
+              <span>กำลังบรรยาย...</span>
+            } @else {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+              <span>ฟังเสียงบทนำภาพนี้</span>
+            }
+          </button>
+
+          <a routerLink="/timeline" class="apple-link">
+            <span>สำรวจ ๕ ยุคประวัติศาสตร์</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Monumental Apple Interactive Carousel Showcase Card -->
+      <div
+        class="monumental-portrait-stage scroll-reveal"
+        [style.transform]="'translateY(' + heroParallaxOffset() + 'px)'"
+        (mouseenter)="isHoveringCarousel = true"
+        (mouseleave)="isHoveringCarousel = false"
+      >
+        <div class="monumental-frame apple-bento-card">
+          <!-- Carousel Image Slides -->
+          <div class="carousel-slides-container">
+            @for (slide of heroSlides; track slide.id; let idx = $index) {
+              <div
+                class="carousel-slide"
+                [class.active]="currentSlideIndex() === idx"
+              >
+                <img
+                  [src]="slide.imageUrl"
+                  [alt]="slide.titleTh"
+                  class="monumental-royal-img"
+                  loading="eager"
+                />
+                <div class="monumental-gradient-vignette"></div>
+              </div>
+            }
+          </div>
+
+          <!-- Carousel Navigation Arrows -->
+          <button class="carousel-arrow prev-arrow glass-panel" (click)="prevSlide(); $event.stopPropagation()" title="ภาพก่อนหน้า">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button class="carousel-arrow next-arrow glass-panel" (click)="nextSlide(); $event.stopPropagation()" title="ภาพถัดไป">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+
+          <!-- Bottom Glass Pill on Portrait -->
+          <div class="monumental-overlay-bar glass-panel">
+            <div class="overlay-left">
+              <div class="royal-seal-badge">{{ currentSlide.badge }}</div>
+              <div class="overlay-info">
+                <span class="overlay-name">{{ currentSlide.titleTh }}</span>
+                <span class="overlay-years">{{ currentSlide.yearsTh }}</span>
+              </div>
+            </div>
+
+            <div class="overlay-right">
+              <!-- Carousel Indicator Dots -->
+              <div class="carousel-dots-group">
+                @for (slide of heroSlides; track slide.id; let idx = $index) {
+                  <button
+                    class="carousel-dot"
+                    [class.active]="currentSlideIndex() === idx"
+                    (click)="goToSlide(idx); $event.stopPropagation()"
+                    [title]="slide.titleTh"
+                  ></button>
+                }
+              </div>
+
+              <a routerLink="/virtual-hall" class="apple-link">
+                <span>ชมในโถง 3D</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 2. DEDICATED HISTORICAL METRICS SECTION (COMFORTABLE READING) -->
+  <!-- ============================================================ -->
+  <section class="section-metrics-dedicated scroll-reveal">
+    <div class="container-apple">
+      <div class="metrics-bento-grid">
+        <div class="metric-bento-card apple-bento-card">
+          <div class="metric-icon-wrap">👑</div>
+          <div class="metric-info">
+            <span class="metric-big-num">๒๔๔๗</span>
+            <span class="metric-bold-title">ปีพระราชสมภพ</span>
+            <p class="metric-subtext">สมเด็จพระนางเจ้ารำไพพรรณี พระบรมราชินีในรัชกาลที่ ๗ (๒๐ ธันวาคม ๒๔๔๗)</p>
+          </div>
+        </div>
+
+        <div class="metric-bento-card apple-bento-card">
+          <div class="metric-icon-wrap">📜</div>
+          <div class="metric-info">
+            <span class="metric-big-num">๕ ยุคสมัย</span>
+            <span class="metric-bold-title">จดหมายเหตุประวัติศาสตร์</span>
+            <p class="metric-subtext">บันทึกเหตุการณ์สำคัญตั้งแต่ปฐมวัย การอภิเษกสมรส จนถึงการสืบสานพระราชปณิธาน</p>
+          </div>
+        </div>
+
+        <div class="metric-bento-card apple-bento-card">
+          <div class="metric-icon-wrap">🎋</div>
+          <div class="metric-info">
+            <span class="metric-big-num">วังสวนบ้านแก้ว</span>
+            <span class="metric-bold-title">ศูนย์พัฒนาหัตถศิลป์</span>
+            <p class="metric-subtext">ปฐมบทแห่งการพัฒนาเสื่อกกจันทบูรและการเกษตรสมัยใหม่เพื่อราษฎร</p>
+          </div>
+        </div>
+
+        <div class="metric-bento-card apple-bento-card">
+          <div class="metric-icon-wrap">🏛️</div>
+          <div class="metric-info">
+            <span class="metric-big-num">100%</span>
+            <span class="metric-bold-title">Open Source Engine</span>
+            <p class="metric-subtext">ติดตั้งบนระบบ Cloud สถาบันพระปกเกล้า พร้อมเทคโนโลยี 3D WebGL คมชัดระดับ 8K</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 3. APPLE FULL-BLEED CHAPTER 1: ROYAL COURT & DEMOCRACY       -->
+  <!-- ============================================================ -->
+  <section class="apple-chapter-section scroll-reveal">
+    <div class="container-apple">
+      <div class="chapter-card-wrapper apple-bento-card">
+        <div
+          class="chapter-img-bg"
+          [style.transform]="'translateY(' + banner1Offset() + 'px)'"
+        >
+          <img
+            src="assets/images/queen_king_portrait.jpg"
+            alt="พระบาทสมเด็จพระปกเกล้าเจ้าอยู่หัว และสมเด็จพระนางเจ้ารำไพพรรณี"
+            class="chapter-photo"
+          />
+        </div>
+
+        <div class="chapter-content-overlay glass-panel">
+          <span class="apple-eyebrow">บทที่ ๑ • พระราชประวัติ</span>
+          <h2 class="chapter-title">เคียงคู่พระบารมีในยุคเปลี่ยนผ่านประชาธิปไตย</h2>
+          <p class="chapter-description">
+            ทรงเป็นพระบรมราชินีพระองค์แรกที่เสด็จฯ เยือนสหรัฐอเมริกาและยุโรปอย่างเป็นทางการ
+            ทรงสร้างความประทับใจแก่นานาชาติด้วยพระสิริโฉมและพระปรีชาญาณ ทรงแบ่งเบาพระราชภาระในยามบ้านเมืองเปลี่ยนผ่านสู่ระบอบประชาธิปไตย ๒๔๗๕
+          </p>
+          <div class="chapter-cta-row">
+            <a routerLink="/timeline" class="btn-apple-primary">
+              <span>อ่านบันทึกประวัติศาสตร์</span>
+            </a>
+            <a routerLink="/timeline" class="apple-link">
+              <span>ดูเส้นทางเสด็จประพาส</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 4. APPLE FULL-BLEED CHAPTER 2: SUAN BAN KAEO & CRAFT         -->
+  <!-- ============================================================ -->
+  <section class="apple-chapter-section scroll-reveal">
+    <div class="container-apple">
+      <div class="chapter-card-wrapper apple-bento-card">
+        <div
+          class="chapter-img-bg"
+          [style.transform]="'translateY(' + banner2Offset() + 'px)'"
+        >
+          <img
+            src="assets/images/queen_portrait_chanthaburi.jpg"
+            alt="สมเด็จพระนางเจ้ารำไพพรรณี ณ วังสวนบ้านแก้ว จันทบุรี"
+            class="chapter-photo"
+          />
+        </div>
+
+        <div class="chapter-content-overlay left-side glass-panel">
+          <span class="apple-eyebrow">บทที่ ๒ • พระราชกรณียกิจ</span>
+          <h2 class="chapter-title">วังสวนบ้านแก้ว ปฐมบทแห่งหัตถศิลป์เสื่อจันทบูรสู่สากล</h2>
+          <p class="chapter-description">
+            พระราชหฤทัยอันมุ่งมั่นในการพัฒนาคุณภาพชีวิตราษฎร ทรงบุกเบิกการเกษตรสมัยใหม่และการทอเสื่อกกจันทบูร
+            ทรงคิดค้นลายทอประยุกต์และนำไปจัดแสดงจนได้รับความนิยม สร้างอาชีพและรายได้ที่ยั่งยืนแก่ราษฎร
+          </p>
+          <div class="chapter-cta-row">
+            <a routerLink="/workshops" class="btn-apple-primary">
+              <span>ทดลองทอเสื่อจำลอง</span>
+            </a>
+            <a routerLink="/workshops" class="apple-link">
+              <span>ดูสตูดิโอหัตถศิลป์</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 5. APPLE BENTO GRID: 6 3D ARTIFACTS & HISTORICAL TREASURES   -->
+  <!-- ============================================================ -->
+  <section class="apple-bento-section scroll-reveal">
+    <div class="container-apple">
+      <div class="bento-header">
+        <span class="apple-eyebrow">วัตถุจัดแสดงล้ำค่า • 3D Showcase</span>
+        <h2 class="bento-headline">โบราณวัตถุและของสะสมส่วนพระองค์</h2>
+        <p class="bento-subhead">
+          สำรวจรายละเอียดวัตถุจัดแสดงชิ้นเอกแบบ 3 มิติ คมชัดระดับ 8K พร้อมเสียงบรรยายเชิงลึก
+        </p>
+      </div>
+
+      <!-- 6-Item Apple Bento Grid -->
+      <div class="apple-bento-grid">
+        @for (item of exhibitionService.artifacts(); track item.id; let idx = $index) {
+          <div class="apple-bento-card artifact-bento-card" (click)="openArtifact(item)">
+            <div class="bento-card-top">
+              <span class="bento-card-tag">{{ item.category }} • {{ item.provenance }}</span>
+              <h3 class="bento-card-title">{{ item.nameTh }}</h3>
+              <p class="bento-card-desc">{{ item.shortDesc }}</p>
+            </div>
+
+            <div class="bento-card-media">
+              <img
+                [src]="getArtifactImageUrl(item)"
+                [alt]="item.nameTh"
+                class="bento-artifact-img"
+                loading="lazy"
+              />
+              <span class="bento-badge-3d">3D Interactive</span>
+            </div>
+
+            <div class="bento-card-bottom">
+              <span class="apple-link">
+                <span>สำรวจ 360° และฟังเสียง</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 6. APPLE ROYAL QUOTE SHOWCASE                                -->
+  <!-- ============================================================ -->
+  <section class="apple-quote-section scroll-reveal">
+    <div class="container-apple">
+      <div class="apple-quote-card apple-bento-card">
+        <div class="quote-gold-mark">“</div>
+        <blockquote class="apple-quote-text">
+          ข้าพเจ้ามีความยินดีที่ได้เห็นความเจริญก้าวหน้าของงานทอเสื่อกกจันทบูร
+          ซึ่งเป็นภูมิปัญญาอันทรงคุณค่าของชาวจันทบุรี และเป็นอาชีพที่สร้างความมั่นคงแก่ราษฎรอย่างยั่งยืน
+        </blockquote>
+        <div class="quote-signature-wrap">
+          <div class="quote-seal-badge">👑 ร.พ.</div>
+          <div class="quote-author-info">
+            <span class="quote-author-name">พระราชดำรัส สมเด็จพระนางเจ้ารำไพพรรณี พระบรมราชินี</span>
+            <span class="quote-author-role">พระราชทาน ณ วังสวนบ้านแก้ว จังหวัดจันทบุรี</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 7. APPLE ACTION GRID CARDS (TIMELINE, WORKSHOPS, GAMES)      -->
+  <!-- ============================================================ -->
+  <section class="apple-actions-section scroll-reveal">
+    <div class="container-apple">
+      <div class="actions-grid-3col">
+        <!-- Card 1: Timeline -->
+        <a routerLink="/timeline" class="action-bento-card apple-bento-card">
+          <div class="action-card-header">
+            <span class="action-num">01</span>
+            <span class="apple-eyebrow">ไทม์ไลน์ประวัติศาสตร์</span>
+            <h3 class="action-title">๕ ยุคสมัยแห่งพระเกียรติคุณ</h3>
+            <p class="action-desc">เจาะลึก ๕ ยุคเหตุการณ์สำคัญตั้งแต่ปฐมวัยจนถึงการอภิเษกสมรสและวังสวนบ้านแก้ว</p>
+          </div>
+          <span class="apple-link action-link">
+            <span>เข้าสู่หน้าไทม์ไลน์</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </span>
+        </a>
+
+        <!-- Card 2: Workshops -->
+        <a routerLink="/workshops" class="action-bento-card apple-bento-card">
+          <div class="action-card-header">
+            <span class="action-num">02</span>
+            <span class="apple-eyebrow">กิจกรรมจำลอง</span>
+            <h3 class="action-title">สตูดิโอทอเสื่อ & ควิซเกียรติบัตร</h3>
+            <p class="action-desc">ทดลองทอเสื่อกกจันทบูรดิจิทัล และทำแบบทดสอบประวัติศาสตร์เพื่อรับเกียรติบัตร</p>
+          </div>
+          <span class="apple-link action-link">
+            <span>เริ่มทำกิจกรรม</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </span>
+        </a>
+
+        <!-- Card 3: Mini-Games -->
+        <a routerLink="/games" class="action-bento-card apple-bento-card">
+          <div class="action-card-header">
+            <span class="action-num">03</span>
+            <span class="apple-eyebrow">มินิเกมประวัติศาสตร์</span>
+            <h3 class="action-title">ศูนย์รวมเกม 3D WebGL</h3>
+            <p class="action-desc">เกมจับคู่การ์ดทองคำ 3D และภารกิจตามหาสมบัติหลวงในห้องพิพิธภัณฑ์หินอ่อน</p>
+          </div>
+          <span class="apple-link action-link">
+            <span>เล่นมินิเกม</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Modal 3D Inspector -->
+@if (selectedArtifact) {
+  <app-artifact-modal [artifact]="selectedArtifact" (close)="closeArtifact()"></app-artifact-modal>
+}
