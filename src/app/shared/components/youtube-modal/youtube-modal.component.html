@@ -1,0 +1,40 @@
+@if (ytService.isModalOpen() && ytService.activeVideo(); as video) {
+  <div class="video-modal-backdrop" (click)="close()">
+    <div class="video-modal-container" (click)="$event.stopPropagation()">
+      <!-- Modal Header -->
+      <div class="video-modal-header">
+        <div class="header-left">
+          <span class="video-category-tag">🎬 {{ video.categoryLabelTh }} • พ.ศ. {{ video.publishedYear }}</span>
+          <h3 class="video-title">{{ video.titleTh }}</h3>
+        </div>
+        <button class="btn-close-modal" (click)="close()" title="ปิดหน้าต่างวิดีโอ (Esc)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- 16:9 YouTube Video Frame -->
+      <div class="video-viewport">
+        <iframe
+          [src]="ytService.getEmbedUrl(video.youtubeId, true)"
+          [title]="video.titleTh"
+          class="youtube-iframe"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      <!-- Modal Footer & Description -->
+      <div class="video-modal-footer">
+        <p class="video-desc">{{ video.descriptionTh }}</p>
+        <div class="footer-meta">
+          <span class="video-duration">ความยาว: {{ video.duration }} นาที</span>
+          <span class="video-channel">สถาบันพระปกเกล้า • King Prajadhipok's Institute</span>
+        </div>
+      </div>
+    </div>
+  </div>
+}

@@ -306,7 +306,62 @@
   </section>
 
   <!-- ============================================================ -->
-  <!-- 6. APPLE ROYAL QUOTE SHOWCASE                                -->
+  <!-- 6. APPLE CINEMA: HISTORICAL YOUTUBE VIDEO ARCHIVES           -->
+  <!-- ============================================================ -->
+  <section class="apple-cinema-section scroll-reveal">
+    <div class="container-apple">
+      <div class="cinema-header">
+        <span class="apple-eyebrow">จดหมายเหตุภาพยนตร์ • Historical Cinema</span>
+        <h2 class="cinema-headline">สารคดีเฉลิมพระเกียรติและฟิล์มภาพยนตร์ประวัติศาสตร์</h2>
+        <p class="cinema-subhead">
+          รับชมสารคดีประวัติศาสตร์ ภาพยนตร์ส่วนพระองค์ และจดหมายเหตุสถาบันพระปกเกล้าผ่าน YouTube ความคมชัดระดับ Full HD
+        </p>
+      </div>
+
+      <div class="cinema-grid">
+        @for (video of ytService.videos(); track video.id) {
+          <div class="cinema-video-card apple-bento-card" (click)="openVideo(video)">
+            <div class="video-thumbnail-stage">
+              <img
+                [src]="video.thumbnailUrl"
+                [alt]="video.titleTh"
+                class="video-thumb-img"
+                loading="lazy"
+                (error)="$any($event.target).src = ytService.getThumbnailUrl(video.youtubeId, 'hq')"
+              />
+              <div class="video-play-halo">
+                <div class="play-btn-circle">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                    <polygon points="6 3 20 12 6 21 6 3"></polygon>
+                  </svg>
+                </div>
+              </div>
+              <span class="video-duration-badge">{{ video.duration }}</span>
+              <span class="video-pill-tag">{{ video.categoryLabelTh }}</span>
+            </div>
+
+            <div class="video-card-meta">
+              <div class="video-meta-top">
+                <span class="video-year-badge">พ.ศ. {{ video.publishedYear }}</span>
+                <span class="video-source">สถาบันพระปกเกล้า</span>
+              </div>
+              <h3 class="video-card-title">{{ video.titleTh }}</h3>
+              <p class="video-card-desc">{{ video.descriptionTh }}</p>
+              <div class="video-watch-link apple-link">
+                <span>เปิดชมภาพยนตร์สารคดี</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 7. APPLE ROYAL QUOTE SHOWCASE                                -->
   <!-- ============================================================ -->
   <section class="apple-quote-section scroll-reveal">
     <div class="container-apple">

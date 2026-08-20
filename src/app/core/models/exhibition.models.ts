@@ -108,3 +108,18 @@ export interface ChronologyItem {
   icon: string;
   order: number;
 }
+
+export interface YouTubeVideoItem {
+  id: string;
+  youtubeId: string;
+  titleTh: string;
+  titleEn: string;
+  duration: string;
+  category: 'biography' | 'documentary' | 'handicraft' | 'archive';
+  categoryLabelTh: string;
+  descriptionTh: string;
+  publishedYear: string;
+  eraId?: string;
+  thumbnailUrl: string;
+  featured?: boolean;
+}

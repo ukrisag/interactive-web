@@ -14,8 +14,9 @@ import { ExhibitionDataService } from '../../core/services/exhibition-data.servi
 import { AnalyticsService } from '../../core/services/analytics.service';
 import { AudioService } from '../../core/services/audio.service';
 import { SurveyService } from '../../core/services/survey.service';
-import { ArtifactItem } from '../../core/models/exhibition.models';
+import { ArtifactItem, YouTubeVideoItem } from '../../core/models/exhibition.models';
 import { ArtifactModalComponent } from '../../shared/components/artifact-modal/artifact-modal.component';
+import { YouTubeService } from '../../core/services/youtube.service';
 
 export interface HeroCarouselSlide {
   id: number;
@@ -38,6 +39,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   public readonly analyticsService = inject(AnalyticsService);
   public readonly audioService = inject(AudioService);
   public readonly surveyService = inject(SurveyService);
+  public readonly ytService = inject(YouTubeService);
   private el = inject(ElementRef);
 
   public selectedArtifact: ArtifactItem | null = null;
@@ -209,5 +211,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.audioService.speakNarration(text);
       this.analyticsService.recordInteraction(`home-play-hero-bio-slide-${this.currentSlide.id}`);
     }
+  }
+
+  public openVideo(video: YouTubeVideoItem): void {
+    this.ytService.openVideoModal(video);
   }
 }
