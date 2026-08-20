@@ -440,3 +440,64 @@
   font-weight: 700;
   color: var(--gold-400);
 }
+
+/* Responsive adjustments for Mobile & Tablet */
+@media (max-width: 768px) {
+  .hall-top-bar {
+    top: 4.8rem;
+    left: 0.75rem;
+    right: 0.75rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+  .top-meta {
+    max-width: 100%;
+    padding: 0.65rem 1rem;
+    border-radius: 16px;
+  }
+  .hall-title {
+    font-size: 1.05rem;
+  }
+  .hall-sub {
+    font-size: 0.75rem;
+  }
+  .room-switcher-tabs {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.25rem 0.4rem;
+  }
+  .room-tab-btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.78rem;
+  }
+  .top-controls-right {
+    justify-content: space-between;
+    width: 100%;
+  }
+  .drag-look-hint {
+    bottom: 4.8rem;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.85rem;
+    width: 90%;
+    justify-content: center;
+  }
+  .hall-bottom-dock {
+    bottom: 1rem;
+    padding: 0 0.5rem;
+  }
+  .dock-container {
+    padding: 0.5rem 0.85rem;
+  }
+  .pin-tooltip {
+    min-width: 180px;
+    padding: 0.6rem 0.8rem;
+  }
+  .tooltip-title {
+    font-size: 0.85rem;
+  }
+  .tooltip-desc {
+    font-size: 0.72rem;
+  }
+}

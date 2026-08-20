@@ -350,3 +350,32 @@ canvas {
   color: #e2e8f0;
   line-height: 1.5;
 }
+
+/* Responsive adjustments for Mobile & Tablet */
+@media (max-width: 768px) {
+  .modal-backdrop {
+    padding: 0.5rem;
+  }
+  .modal-window {
+    max-height: 94vh;
+    border-radius: 18px;
+  }
+  .modal-header {
+    padding: 0.85rem 1rem;
+  }
+  .modal-body {
+    padding: 1rem 0.85rem;
+    gap: 1rem;
+  }
+  .stage-3d-wrapper {
+    height: 260px;
+    border-radius: 14px;
+  }
+  .specs-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .spec-item {
+    padding: 0.5rem 0.75rem;
+  }
+}

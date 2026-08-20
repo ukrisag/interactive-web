@@ -688,22 +688,85 @@
   align-self: flex-start;
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments for Tablet & Mobile */
 @media (max-width: 1024px) {
+  .home-page {
+    gap: 6rem;
+    padding-bottom: 6rem;
+  }
+  .carousel-slides-container {
+    height: 600px;
+  }
   .metrics-bento-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .apple-bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
+  }
+  .actions-grid-3col {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .apple-quote-card {
+    padding: 4rem 3rem;
   }
 }
 
 @media (max-width: 768px) {
+  .home-page {
+    gap: 4.5rem;
+    padding-bottom: 5rem;
+  }
+  .hero-apple-section {
+    padding: 6.8rem 0 2rem;
+  }
+  .hero-center-stage {
+    gap: 2rem;
+  }
+  .monumental-frame {
+    border-radius: 24px;
+    padding: 0.5rem;
+  }
   .carousel-slides-container {
-    height: 520px;
+    height: 440px;
+    border-radius: 20px;
+  }
+  .carousel-arrow {
+    width: 36px;
+    height: 36px;
+    top: 38%;
+  }
+  .prev-arrow {
+    left: 0.75rem;
+  }
+  .next-arrow {
+    right: 0.75rem;
+  }
+  .monumental-overlay-bar {
+    bottom: 0.85rem;
+    width: 95%;
+    padding: 0.85rem 1.1rem;
+    border-radius: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  .overlay-right {
+    width: 100%;
+    justify-content: space-between;
   }
   .metrics-bento-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .metric-bento-card {
+    padding: 1.6rem 1.25rem;
   }
   .chapter-card-wrapper {
-    height: 600px;
+    height: auto;
+    min-height: 520px;
   }
   .chapter-content-overlay,
   .chapter-content-overlay.left-side {
@@ -713,8 +776,69 @@
     right: auto;
     max-width: 100%;
     margin: 1rem;
+    padding: 1.75rem;
+    border-radius: 20px;
+  }
+  .apple-bento-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .artifact-bento-card {
+    padding: 1.6rem;
+  }
+  .bento-card-media {
+    height: 260px;
+  }
+  .actions-grid-3col {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .action-bento-card {
+    padding: 1.75rem;
   }
   .apple-quote-card {
-    padding: 3rem 2rem;
+    padding: 3rem 1.5rem;
+    border-radius: 24px;
+  }
+  .quote-gold-mark {
+    font-size: 3.5rem;
+  }
+  .apple-quote-text {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+  }
+  .quote-signature-wrap {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  .quote-author-info {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-slides-container {
+    height: 380px;
+  }
+  .royal-seal-badge {
+    font-size: 0.95rem;
+    padding: 0.25rem 0.6rem;
+  }
+  .overlay-name {
+    font-size: 0.98rem;
+  }
+  .overlay-years {
+    font-size: 0.75rem;
+  }
+  .apple-cta-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
+  .btn-apple-primary,
+  .btn-apple-secondary {
+    width: 100%;
   }
 }

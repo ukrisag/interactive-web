@@ -572,3 +572,37 @@
     box-shadow: none;
   }
 }
+
+/* Responsive adjustments for Mobile & Tablet */
+@media (max-width: 768px) {
+  .workshops-page {
+    padding: 6.5rem 0 5rem;
+  }
+  .weaving-layout {
+    grid-template-columns: 1fr;
+  }
+  .certificate-frame {
+    padding: 2rem 1.25rem;
+    border-radius: 16px;
+  }
+  .cert-recipient-name {
+    font-size: 1.35rem;
+    padding: 0.25rem 1rem;
+  }
+  .cert-footer {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    text-align: center;
+    margin-top: 2rem;
+  }
+  .tabs-control {
+    width: 100%;
+    overflow-x: auto;
+  }
+  .tab-pill {
+    padding: 0.5rem 1rem;
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+}

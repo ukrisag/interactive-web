@@ -402,3 +402,24 @@
   color: var(--text-subtle);
   margin-top: 0.35rem;
 }
+
+/* Responsive adjustments for Mobile & Tablet */
+@media (max-width: 768px) {
+  .admin-page {
+    padding: 6.5rem 0 5rem;
+  }
+  .charts-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .chart-card {
+    padding: 1.25rem 0.85rem;
+    border-radius: 18px;
+  }
+  .chart-container {
+    height: 240px;
+  }
+  .dashboard-header {
+    margin-bottom: 1.75rem;
+  }
+}

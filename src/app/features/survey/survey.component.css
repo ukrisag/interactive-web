@@ -261,3 +261,30 @@
   gap: 1rem;
   flex-wrap: wrap;
 }
+
+/* Responsive adjustments for Mobile & Tablet */
+@media (max-width: 768px) {
+  .survey-page {
+    padding: 6.5rem 0 5rem;
+  }
+  .survey-form-card {
+    padding: 1.75rem 1.15rem;
+    border-radius: 20px;
+  }
+  .star-btn {
+    width: 44px;
+    height: 44px;
+  }
+  .star-btn svg {
+    width: 22px;
+    height: 22px;
+  }
+  .btn-large {
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+  }
+  .thankyou-card {
+    padding: 2.5rem 1.25rem;
+    border-radius: 20px;
+  }
+}
