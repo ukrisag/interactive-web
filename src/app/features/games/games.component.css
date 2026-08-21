@@ -466,6 +466,40 @@
   padding: 1.35rem 1.75rem;
   border-radius: 20px;
   transition: all 0.3s;
+  cursor: grab;
+  user-select: none;
+}
+
+.chronology-card:active {
+  cursor: grabbing;
+}
+
+.chronology-card.dragging {
+  opacity: 0.45;
+  border: 2px dashed var(--gold-400);
+  transform: scale(0.98);
+}
+
+.chronology-card.drag-over {
+  border-color: var(--gold-300);
+  background: var(--bg-card-hover);
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+}
+
+.drag-handle-grip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: var(--text-subtle);
+  cursor: grab;
+  padding: 0.2rem 0.4rem;
+  transition: color 0.2s;
+}
+
+.chronology-card:hover .drag-handle-grip {
+  color: var(--gold-300);
 }
 
 .chronology-card.correct-pos {

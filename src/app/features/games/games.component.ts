@@ -7,13 +7,15 @@ import {
   OnDestroy,
   inject,
   HostListener,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  effect
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as THREE from 'three';
 import confetti from 'canvas-confetti';
 import { AnalyticsService } from '../../core/services/analytics.service';
 import { AudioService } from '../../core/services/audio.service';
+import { ThemeService } from '../../core/services/theme.service';
 import { MemoryCard, HiddenTreasureItem, ChronologyItem } from '../../core/models/exhibition.models';
 
 interface Card3DObject {
@@ -40,10 +42,22 @@ interface Detective3DObject {
 export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
   public readonly analyticsService = inject(AnalyticsService);
   public readonly audioService = inject(AudioService);
+  public readonly themeService = inject(ThemeService);
   private cdr = inject(ChangeDetectorRef);
 
   public activeGame: 'memory' | 'hidden' | 'chronology' = 'memory';
   public totalGamePoints = 0;
+
+  constructor() {
+    effect(() => {
+      // Re-initialize active 3D WebGL scene when theme switches!
+      const theme = this.themeService.currentTheme();
+      setTimeout(() => {
+        this.cleanupWebGL();
+        this.initWebGLForActiveGame();
+      }, 50);
+    });
+  }
 
   // WebGL Canvas References
   @ViewChild('memoryCanvas', { static: false }) memoryCanvasRef?: ElementRef<HTMLCanvasElement>;
@@ -328,8 +342,10 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     const width = canvas.clientWidth || 1000;
     const height = canvas.clientHeight || 560;
 
+    const isLight = this.themeService.currentTheme() === 'light';
+
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0x0e1424);
+    this.scene.background = new THREE.Color(isLight ? 0xefece3 : 0x0e1424);
 
     this.camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
     this.camera.position.set(0, 0, 8.4);
@@ -340,14 +356,14 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     // Studio Lights - Crystal Clear
-    const ambientLight = new THREE.AmbientLight(0xffffff, 2.8);
+    const ambientLight = new THREE.AmbientLight(0xffffff, isLight ? 3.2 : 2.8);
     this.scene.add(ambientLight);
 
-    const mainKeyLight = new THREE.DirectionalLight(0xfffbeb, 3.2);
+    const mainKeyLight = new THREE.DirectionalLight(0xfffbeb, isLight ? 3.4 : 3.2);
     mainKeyLight.position.set(0, 6, 8);
     this.scene.add(mainKeyLight);
 
-    const fillLight = new THREE.DirectionalLight(0xdbeafe, 2.0);
+    const fillLight = new THREE.DirectionalLight(0xdbeafe, isLight ? 2.2 : 2.0);
     fillLight.position.set(-6, -2, 6);
     this.scene.add(fillLight);
 
@@ -357,7 +373,7 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Studio Backdrop with warm museum glow
     const backdropGeo = new THREE.PlaneGeometry(18, 11);
-    const backdropMat = new THREE.MeshBasicMaterial({ color: 0x111a30 });
+    const backdropMat = new THREE.MeshBasicMaterial({ color: isLight ? 0xe3ded0 : 0x111a30 });
     const backdrop = new THREE.Mesh(backdropGeo, backdropMat);
     backdrop.position.set(0, 0, -1);
     this.scene.add(backdrop);
@@ -414,13 +430,14 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     const cardWidth = 1.65;
     const cardHeight = 1.65;
     const cardDepth = 0.06;
+    const isLight = this.themeService.currentTheme() === 'light';
 
     // 1. Slab Body
     const slabGeo = new THREE.BoxGeometry(cardWidth, cardHeight, cardDepth);
     const slabMat = new THREE.MeshStandardMaterial({
-      color: 0x1e293b,
-      metalness: 0.5,
-      roughness: 0.3
+      color: isLight ? 0xfcfbfa : 0x1e293b,
+      metalness: isLight ? 0.2 : 0.5,
+      roughness: isLight ? 0.4 : 0.3
     });
     const slab = new THREE.Mesh(slabGeo, slabMat);
     group.add(slab);
@@ -428,7 +445,7 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     // 2. Beveled Gold Border Frame
     const borderGeo = new THREE.BoxGeometry(cardWidth + 0.05, cardHeight + 0.05, 0.025);
     const borderMat = new THREE.MeshStandardMaterial({
-      color: 0xd4af37,
+      color: isLight ? 0xb89326 : 0xd4af37,
       metalness: 0.95,
       roughness: 0.15
     });
@@ -666,9 +683,12 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     const width = canvas.clientWidth || 1000;
     const height = canvas.clientHeight || 560;
 
+    const isLight = this.themeService.currentTheme() === 'light';
+    const bgHex = isLight ? 0xefece3 : 0x0f172a;
+
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0x0f172a);
-    this.scene.fog = new THREE.FogExp2(0x0f172a, 0.02);
+    this.scene.background = new THREE.Color(bgHex);
+    this.scene.fog = new THREE.FogExp2(bgHex, isLight ? 0.012 : 0.02);
 
     this.camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
     this.updateCameraPosition();
@@ -976,12 +996,61 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // ==========================================
-  // 3. CHRONOLOGY METHODS
+  // 3. CHRONOLOGY METHODS & DRAG AND DROP
   // ==========================================
+  public draggedItemIndex: number | null = null;
+  public dragOverIndex: number | null = null;
+
   public initChronologyGame(): void {
     this.chronologyChecked = false;
     this.chronologyScore = 0;
     this.userChronology = [...this.initialChronology].sort(() => Math.random() - 0.5);
+  }
+
+  public onDragStart(event: DragEvent, index: number): void {
+    if (this.chronologyChecked) return;
+    this.draggedItemIndex = index;
+    if (event.dataTransfer) {
+      event.dataTransfer.effectAllowed = 'move';
+      event.dataTransfer.setData('text/plain', index.toString());
+    }
+  }
+
+  public onDragOver(event: DragEvent, index: number): void {
+    if (this.chronologyChecked) return;
+    event.preventDefault();
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = 'move';
+    }
+    this.dragOverIndex = index;
+  }
+
+  public onDragLeave(index: number): void {
+    if (this.dragOverIndex === index) {
+      this.dragOverIndex = null;
+    }
+  }
+
+  public onDrop(event: DragEvent, targetIndex: number): void {
+    if (this.chronologyChecked) return;
+    event.preventDefault();
+    if (this.draggedItemIndex === null || this.draggedItemIndex === targetIndex) {
+      this.draggedItemIndex = null;
+      this.dragOverIndex = null;
+      return;
+    }
+
+    const movedItem = this.userChronology.splice(this.draggedItemIndex, 1)[0];
+    this.userChronology.splice(targetIndex, 0, movedItem);
+
+    this.draggedItemIndex = null;
+    this.dragOverIndex = null;
+    this.cdr.markForCheck();
+  }
+
+  public onDragEnd(): void {
+    this.draggedItemIndex = null;
+    this.dragOverIndex = null;
   }
 
   public moveItem(index: number, direction: 'up' | 'down'): void {

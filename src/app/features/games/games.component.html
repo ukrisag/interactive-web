@@ -299,17 +299,28 @@
 
       <!-- Instruction Banner -->
       <div class="instruction-box">
-        ⏳ <strong>วิธีเล่น:</strong> กดปุ่มลูกศร <strong>[▲ ขึ้น]</strong> หรือ <strong>[▼ ลง]</strong> เพื่อเรียงลำดับ 5 เหตุการณ์สำคัญจากอดีตสู่ปัจจุบัน (พ.ศ. น้อยไปมาก) แล้วกดปุ่ม "ตรวจคำตอบ"!
+        ⏳ <strong>วิธีเล่น Drag & Drop:</strong> <strong>คลิกลากการ์ด (Drag & Drop)</strong> เพื่อจัดเรียงลำดับ 5 เหตุการณ์สำคัญจากอดีตสู่ปัจจุบัน (พ.ศ. น้อยไปมาก) หรือใช้ปุ่มลูกศร <strong>[▲ ขึ้น] [▼ ลง]</strong> แล้วกดปุ่ม "ตรวจคำตอบ"!
       </div>
 
-      <!-- Chronology List Items -->
+      <!-- Chronology List Items with Drag & Drop -->
       <div class="chronology-list">
         @for (item of userChronology; track item.id; let idx = $index) {
           <div
             class="chronology-card glass-panel"
             [class.correct-pos]="chronologyChecked && item.order === (idx + 1)"
             [class.wrong-pos]="chronologyChecked && item.order !== (idx + 1)"
+            [class.dragging]="draggedItemIndex === idx"
+            [class.drag-over]="dragOverIndex === idx"
+            [attr.draggable]="!chronologyChecked"
+            (dragstart)="onDragStart($event, idx)"
+            (dragover)="onDragOver($event, idx)"
+            (dragleave)="onDragLeave(idx)"
+            (drop)="onDrop($event, idx)"
+            (dragend)="onDragEnd()"
           >
+            <div class="drag-handle-grip" title="คลิกลากเพื่อเรียงลำดับ">
+              <span>⋮⋮</span>
+            </div>
             <div class="card-order-badge">{{ idx + 1 }}</div>
             <div class="card-icon-emoji">{{ item.icon }}</div>
             <div class="card-chron-details">
