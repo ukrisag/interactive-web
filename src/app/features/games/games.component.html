@@ -165,36 +165,80 @@
 
       <!-- Instruction Banner -->
       <div class="instruction-box">
-        🕵️‍♂️ <strong>ภารกิจนักสืบจดหมายเหตุ:</strong> โบราณวัตถุ 5 ชิ้นถูกซ่อนอยู่อย่างแนบเนียนในห้องจัดแสดง (เช่น ในตู้กระจก, ใต้กี่ทอเสื่อ, บนโต๊ะไม้, หลังฉากกั้น) 
-        <strong>ลากเมาส์หมุนมุมมอง 360°</strong> และ <strong>กดปุ่ม [+] เพื่อซูมเข้าตรวจดูอย่างใกล้ชิด</strong> หรือคลิกรายการด้านขวาเพื่อเปิดอ่าน <strong>"💡 เบาะแสประวัติศาสตร์"</strong>!
+        🕵️‍♂️ <strong>ภารกิจนักสืบจดหมายเหตุ (Virtual Hall Search Mode):</strong> สำรวจโถงพิพิธภัณฑ์ภาพถ่ายความละเอียดสูง 
+        <strong>คลิกลากภาพเพื่อสำรวจ 360°</strong> และ <strong>กดปุ่ม [+] เพื่อซูมค้นหาโบราณวัตถุ 5 ชิ้น</strong> โดยการสังเกตและคลิกค้นหาด้วยตัวเอง (ไม่มีหมุดบอกตำแหน่ง)!
       </div>
 
-      <!-- 3D Room Canvas + HUD Checklist -->
+      <!-- Virtual Hall Panoramic Museum Stage + HUD Checklist -->
       <div class="detective-layout">
-        <!-- 3D Room WebGL Canvas Viewport -->
-        <div class="webgl-detective-container glass-panel">
-          <canvas
-            #detectiveCanvas
-            (click)="onDetectiveCanvasClick($event)"
-            (mousedown)="onMouseDown($event)"
-            class="webgl-canvas"
-          ></canvas>
+        <!-- Virtual Hall High-Res Panoramic Viewport -->
+        <div
+          class="museum-viewport glass-panel"
+          (mousedown)="onPanMouseDown($event)"
+          (mousemove)="onPanMouseMove($event)"
+          (mouseup)="onPanMouseUp()"
+          (mouseleave)="onPanMouseUp()"
+          (wheel)="onWheel($event)"
+        >
+          <!-- Photo Stage with Hardware-Accelerated Pan & Zoom -->
+          <div
+            class="museum-photo-stage"
+            [style.transform]="'translate3d(' + panX + 'px, ' + panY + 'px, 0) scale(' + zoomLevel + ')'"
+          >
+            <img
+              [src]="museumRoomImage"
+              alt="โถงนิทรรศการพิพิธภัณฑ์สมเด็จพระนางเจ้ารำไพพรรณีฯ"
+              class="museum-main-photo"
+            />
 
-          <!-- 3D Room Toolbar: Drag hint + Zoom Controls -->
+            <!-- Interactive Hotspot Pin Beacons placed directly on exhibit vitrines -->
+            <div class="hotspots-layer">
+              @for (item of hiddenItems; track item.id) {
+                <div
+                  class="hotspot-pin"
+                  [class.found-pin]="item.found"
+                  [class.active-clue]="selectedClueItem?.id === item.id"
+                  [style.left.%]="item.xPercent"
+                  [style.top.%]="item.yPercent"
+                  (click)="discoverDetectiveItem(item); $event.stopPropagation()"
+                >
+                  <div class="pin-beacon">
+                    <span class="beacon-wave"></span>
+                    <span class="beacon-icon">{{ item.found ? '✓' : item.icon }}</span>
+                  </div>
+
+                  <div class="pin-tooltip glass-panel">
+                    <span class="tooltip-badge">{{ item.categoryTh }}</span>
+                    <h4 class="tooltip-title">{{ item.nameTh }}</h4>
+                    @if (item.found) {
+                      <p class="tooltip-desc text-success">พบแล้ว ✓ (+250 Points)</p>
+                    } @else {
+                      <p class="tooltip-desc">คลิกเพื่อสืบสวนโบราณวัตถุชิ้นนี้</p>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Top & Bottom Controls (Virtual Hall Controls) -->
           <div class="detective-viewport-overlay">
-            <div class="drag-orbit-hint">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <div class="drag-orbit-hint glass-panel">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
                 <path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"></path>
               </svg>
-              <span>คลิกลากเมาส์เพื่อหมุนกล้อง 360°</span>
+              <span>คลิกลากเพื่อสำรวจห้อง • หมุนลูกกลิ้งเพื่อซูม</span>
             </div>
 
-            <div class="zoom-controls">
-              <button class="zoom-btn" (click)="zoomCamera(-1.2)" title="ซูมเข้า">
+            <div class="zoom-controls glass-panel">
+              <button class="zoom-btn" (click)="zoomIn(); $event.stopPropagation()" title="ซูมเข้า">
                 🔍+
               </button>
-              <button class="zoom-btn" (click)="zoomCamera(1.2)" title="ซูมออก">
+              <button class="zoom-btn" (click)="zoomOut(); $event.stopPropagation()" title="ซูมออก">
                 🔍-
+              </button>
+              <button class="zoom-btn" (click)="resetView(); $event.stopPropagation()" title="รีเซ็ตมุมมอง">
+                🎯
               </button>
             </div>
           </div>
@@ -203,7 +247,7 @@
         <!-- Right Side: Checklist of Items to Find -->
         <div class="items-checklist-panel glass-panel">
           <h3 class="checklist-title">📋 แฟ้มโบราณวัตถุที่ต้องค้นหา (5 ชิ้น):</h3>
-          <p class="checklist-sub">คลิกที่การ์ดเพื่ออ่านเบาะแสที่ซ่อน</p>
+          <p class="checklist-sub">คลิกรายการเพื่ออ่านเบาะแสที่ซ่อนในโถงพิพิธภัณฑ์</p>
           
           <div class="checklist-items">
             @for (item of hiddenItems; track item.id) {

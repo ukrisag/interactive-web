@@ -97,18 +97,22 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
   private card3DObjects: Card3DObject[] = [];
 
   // ==========================================
-  // GAME 2: 3D WEBGL ARCHIVAL DETECTIVE ROOM
+  // GAME 2: VIRTUAL HALL ARCHIVAL DETECTIVE ROOM
   // ==========================================
+  public museumRoomImage = 'assets/images/queen_museum_democracy_hall.jpg';
+
   public hiddenItems: HiddenTreasureItem[] = [
     {
-      id: 'item-cypher',
-      nameTh: 'ตราพระนามาภิไธยย่อ ร.พ.',
-      categoryTh: 'ตราประจำพระองค์',
-      descriptionTh: 'ตราสัญลักษณ์พระนามย่อ ร.พ. ประดับอัญมณีสีชมพูกลีบบัว',
-      clueTh: 'ซ่อนอยู่ในตู้กระจกโบราณ (Showcase Vitrine) กลางห้องจัดแสดง ต้องหมุนมุมกล้องมองผ่านกระจก',
-      icon: '👑',
-      xPercent: 0,
-      yPercent: 0,
+      id: 'item-seal',
+      nameTh: 'ตราประทับชาดพระราชหัตถเลขา',
+      categoryTh: 'จดหมายเหตุประชาธิปไตย',
+      descriptionTh: 'ตราประทับชาดสีแดงรับรองพระราชหัตถเลขาส่วนพระองค์ ๒๔๗๗',
+      clueTh: 'ซ่อนอยู่ในตู้กระจกจัดแสดงเอกสารจดหมายเหตุลายพระหัตถ์ (โซนด้านซ้ายของห้อง)',
+      icon: '📜',
+      xPercent: 18,
+      yPercent: 54,
+      widthPercent: 20,
+      heightPercent: 30,
       found: false
     },
     {
@@ -116,10 +120,25 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
       nameTh: 'กล้องโบราณ Voigtländer',
       categoryTh: 'ภาพถ่ายประวัติศาสตร์',
       descriptionTh: 'กล้องที่ทรงใช้บันทึกภาพเมื่อครั้งเสด็จประพาสยุโรปและอเมริกา',
-      clueTh: 'วางอยู่บนขาตั้งกล้องไม้โบราณ ในมุมสตูดิโอด้านหลังเสาหินอ่อนทิศตะวันออกเฉียงเหนือ',
+      clueTh: 'ซ่อนอยู่ในตู้กระจกจัดแสดงกล้องและอุปกรณ์ถ่ายภาพโบราณ (โซนกลางห้องจัดแสดง)',
       icon: '📷',
-      xPercent: 0,
-      yPercent: 0,
+      xPercent: 50,
+      yPercent: 54,
+      widthPercent: 22,
+      heightPercent: 32,
+      found: false
+    },
+    {
+      id: 'item-cypher',
+      nameTh: 'ตราพระนามาภิไธยย่อ ร.พ.',
+      categoryTh: 'ตราประจำพระองค์',
+      descriptionTh: 'ตราสัญลักษณ์พระนามย่อ ร.พ. ประดับอัญมณีสีชมพูกลีบบัว',
+      clueTh: 'ซ่อนอยู่ในตู้กระจกจัดแสดงเครื่องราชอิสริยยศและสายสะพาย (โซนด้านขวาของห้อง)',
+      icon: '👑',
+      xPercent: 82,
+      yPercent: 54,
+      widthPercent: 20,
+      heightPercent: 30,
       found: false
     },
     {
@@ -127,10 +146,12 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
       nameTh: 'กระสวยทอเสื่อจันทบูร',
       categoryTh: 'หัตถศิลป์วังสวนบ้านแก้ว',
       descriptionTh: 'อุปกรณ์สอดเส้นกกที่ทรงพัฒนาลวดลายประยุกต์',
-      clueTh: 'ซ่อนอยู่บนคานไม้ชั้นล่างของแท่นทอเสื่อจันทบูรณ์ ณ มุมหัตถศิลป์ทิศตะวันตกเฉียงใต้',
+      clueTh: 'วางอยู่บนแท่นจัดแสดงหัตถกรรมเสื่อกกจันทบูร (โซนโต๊ะจัดแสดงฝั่งซ้ายล่าง)',
       icon: '🎋',
-      xPercent: 0,
-      yPercent: 0,
+      xPercent: 34,
+      yPercent: 72,
+      widthPercent: 18,
+      heightPercent: 20,
       found: false
     },
     {
@@ -138,24 +159,24 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
       nameTh: 'กุญแจรถยนต์พระที่นั่ง',
       categoryTh: 'ยานยนต์หลวง 1930s',
       descriptionTh: 'สัญลักษณ์ยานยนต์พระที่นั่ง Rolls-Royce เมื่อครั้งประทับ ณ อังกฤษ',
-      clueTh: 'วางอยู่บนโต๊ะทำงานไม้มะฮอกกานี ข้างสมุดบันทึกประวัติศาสตร์ทิศตะวันออกเฉียงใต้',
+      clueTh: 'วางอยู่บนแท่นจัดแสดงยานยนต์หลวงและของสะสมส่วนพระองค์ (โซนโต๊ะจัดแสดงฝั่งขวาล่าง)',
       icon: '🚗',
-      xPercent: 0,
-      yPercent: 0,
-      found: false
-    },
-    {
-      id: 'item-seal',
-      nameTh: 'ตราประทับชาดพระราชหัตถเลขา',
-      categoryTh: 'จดหมายเหตุประชาธิปไตย',
-      descriptionTh: 'ตราประทับชาดสีแดงรับรองพระราชหัตถเลขาส่วนพระองค์',
-      clueTh: 'วางอยู่บนแท่นจัดแสดงหลังฉากไม้แกะสลักโบราณทิศตะวันตกเฉียงเหนือ',
-      icon: '📜',
-      xPercent: 0,
-      yPercent: 0,
+      xPercent: 66,
+      yPercent: 72,
+      widthPercent: 18,
+      heightPercent: 20,
       found: false
     }
   ];
+
+  // Virtual Hall Pan & Zoom controls for Game 2
+  public zoomLevel = 1.0;
+  public panX = 0;
+  public panY = 0;
+  private isPanDragging = false;
+  private startMousePos = { x: 0, y: 0 };
+  private startPan = { x: 0, y: 0 };
+
   public selectedClueItem: HiddenTreasureItem | null = null;
   public foundItemNotification: HiddenTreasureItem | null = null;
   public hiddenGameCompleted = false;
@@ -651,17 +672,79 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.hiddenGameCompleted = false;
     this.detectiveInspections = 0;
     this.detectiveTimer = 0;
+    this.zoomLevel = 1.0;
+    this.panX = 0;
+    this.panY = 0;
     if (this.detectiveInterval) {
       clearInterval(this.detectiveInterval);
       this.detectiveInterval = null;
     }
-    this.cleanupWebGL();
-    setTimeout(() => this.init3DDetectiveScene(), 50);
   }
 
   public showClue(item: HiddenTreasureItem): void {
     this.selectedClueItem = item;
     this.cdr.markForCheck();
+  }
+
+  public zoomIn(): void {
+    this.zoomLevel = Math.min(this.zoomLevel + 0.25, 2.5);
+  }
+
+  public zoomOut(): void {
+    this.zoomLevel = Math.max(this.zoomLevel - 0.25, 0.85);
+  }
+
+  public resetView(): void {
+    this.zoomLevel = 1.0;
+    this.panX = 0;
+    this.panY = 0;
+  }
+
+  public onPanMouseDown(event: MouseEvent): void {
+    if (this.activeGame !== 'hidden') return;
+    this.isPanDragging = true;
+    this.startMousePos = { x: event.clientX, y: event.clientY };
+    this.startPan = { x: this.panX, y: this.panY };
+  }
+
+  public onPanMouseMove(event: MouseEvent): void {
+    if (!this.isPanDragging || this.activeGame !== 'hidden') return;
+    const dx = event.clientX - this.startMousePos.x;
+    const dy = event.clientY - this.startMousePos.y;
+    this.panX = this.startPan.x + dx;
+    this.panY = this.startPan.y + dy;
+  }
+
+  public onPanMouseUp(): void {
+    this.isPanDragging = false;
+  }
+
+  public onWheel(event: WheelEvent): void {
+    if (this.activeGame !== 'hidden') return;
+    event.preventDefault();
+    const zoomFactor = event.deltaY < 0 ? 1.1 : 0.9;
+    this.zoomLevel = Math.max(0.85, Math.min(2.5, this.zoomLevel * zoomFactor));
+  }
+
+  public on3DMousedown(event: MouseEvent): void {
+    if (this.activeGame !== 'hidden') return;
+    this.isDragging = true;
+    this.previousMousePosition = { x: event.clientX, y: event.clientY };
+  }
+
+  @HostListener('window:mousemove', ['$event'])
+  public onWindowMouseMove(event: MouseEvent): void {
+    if (this.isDragging && this.activeGame === 'hidden' && this.camera) {
+      const deltaX = event.clientX - this.previousMousePosition.x;
+      this.cameraOrbitAngle -= deltaX * 0.005;
+      this.updateCameraPosition();
+      this.previousMousePosition = { x: event.clientX, y: event.clientY };
+    }
+  }
+
+  @HostListener('window:mouseup')
+  public onWindowMouseUp(): void {
+    this.isDragging = false;
   }
 
   public zoomCamera(delta: number): void {
@@ -972,27 +1055,6 @@ export class GamesComponent implements OnInit, AfterViewInit, OnDestroy {
       this.triggerConfetti();
     }
     this.cdr.markForCheck();
-  }
-
-  public onMouseDown(event: MouseEvent): void {
-    if (this.activeGame !== 'hidden') return;
-    this.isDragging = true;
-    this.previousMousePosition = { x: event.clientX, y: event.clientY };
-  }
-
-  @HostListener('window:mousemove', ['$event'])
-  public onWindowMouseMove(event: MouseEvent): void {
-    if (!this.isDragging || this.activeGame !== 'hidden' || !this.camera) return;
-    const deltaX = event.clientX - this.previousMousePosition.x;
-    this.cameraOrbitAngle -= deltaX * 0.005;
-
-    this.updateCameraPosition();
-    this.previousMousePosition = { x: event.clientX, y: event.clientY };
-  }
-
-  @HostListener('window:mouseup')
-  public onWindowMouseUp(): void {
-    this.isDragging = false;
   }
 
   // ==========================================

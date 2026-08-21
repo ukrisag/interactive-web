@@ -96,6 +96,8 @@ export interface HiddenTreasureItem {
   icon: string;
   xPercent: number;
   yPercent: number;
+  widthPercent?: number;
+  heightPercent?: number;
   found: boolean;
 }
 
