@@ -100,7 +100,7 @@
   font-family: var(--font-royal);
   font-size: 1.2rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-main);
   margin-bottom: 0.25rem;
 }
 
@@ -118,8 +118,8 @@
   padding: 0.35rem 0.5rem;
   border-radius: 9999px;
   pointer-events: auto;
-  background: rgba(10, 15, 29, 0.88);
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-gold);
   backdrop-filter: blur(16px);
 }
 
@@ -136,16 +136,16 @@
 }
 
 .room-tab-btn:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  background: var(--bg-card-hover);
 }
 
 .room-tab-btn.active {
   background: linear-gradient(135deg, rgba(212, 175, 55, 0.4), rgba(212, 175, 55, 0.15));
   border: 1px solid rgba(212, 175, 55, 0.6);
-  color: #ffffff;
+  color: var(--text-main);
   font-weight: 600;
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
+  box-shadow: 0 0 15px var(--gold-glow);
 }
 
 /* Right Controls (Zoom + Reset) */
@@ -161,15 +161,15 @@
   align-items: center;
   border-radius: 9999px;
   padding: 0.25rem;
-  background: rgba(10, 15, 29, 0.88);
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-gold);
   backdrop-filter: blur(16px);
 }
 
 .zoom-btn {
   background: transparent;
   border: none;
-  color: #ffffff;
+  color: var(--text-main);
   width: 36px;
   height: 36px;
   display: flex;
@@ -181,7 +181,7 @@
 }
 
 .zoom-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--bg-card-hover);
   color: var(--gold-300);
 }
 
@@ -193,9 +193,9 @@
 .btn-overview {
   padding: 0.65rem 1.3rem;
   border-radius: 9999px;
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  background: rgba(10, 15, 29, 0.88);
-  color: #ffffff;
+  border: 1px solid var(--border-gold);
+  background: var(--bg-surface);
+  color: var(--text-main);
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -281,9 +281,9 @@
   top: 52px;
   padding: 0.85rem 1.1rem;
   border-radius: 16px;
-  background: rgba(10, 15, 29, 0.95);
-  border: 1px solid rgba(212, 175, 55, 0.6);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(212, 175, 55, 0.25);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-gold);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 25px var(--gold-glow);
   white-space: nowrap;
   display: flex;
   flex-direction: column;
@@ -299,8 +299,8 @@
 .hotspot-pin:hover .pin-tooltip {
   opacity: 1;
   border-color: var(--gold-300);
-  background: rgba(10, 15, 29, 0.98);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(212, 175, 55, 0.35);
+  background: var(--bg-surface);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 30px var(--gold-glow);
 }
 
 .tooltip-badge {
@@ -315,12 +315,12 @@
   font-family: var(--font-royal);
   font-size: 0.95rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-main);
 }
 
 .tooltip-desc {
   font-size: 0.78rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   max-width: 260px;
   white-space: normal;
   text-align: center;
@@ -329,7 +329,7 @@
 
 .tooltip-action {
   font-size: 0.72rem;
-  color: #38bdf8;
+  color: var(--apple-blue);
   font-weight: 600;
   margin-top: 0.25rem;
 }
@@ -348,12 +348,12 @@
   padding: 0.55rem 1.4rem;
   border-radius: 9999px;
   font-size: 0.85rem;
-  color: #ffffff;
-  background: rgba(10, 15, 29, 0.88);
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: var(--text-main);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-gold);
   pointer-events: none;
   z-index: 45;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(16px);
   animation: pulseGlow 3s infinite ease-in-out;
 }
@@ -390,9 +390,9 @@
   pointer-events: auto;
   max-width: 95vw;
   overflow-x: auto;
-  background: rgba(10, 15, 29, 0.9);
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-gold);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(16px);
 }
 
@@ -414,7 +414,7 @@
   gap: 0.45rem;
   padding: 0.45rem 0.9rem;
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-card-hover);
   border: 1px solid var(--border-subtle);
   color: var(--text-muted);
   font-size: 0.8rem;
@@ -424,8 +424,8 @@
 }
 
 .dock-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
+  background: var(--bg-glass-card);
+  color: var(--text-main);
 }
 
 .dock-btn.active {

@@ -23,9 +23,9 @@
   max-height: 90vh;
   overflow-y: auto;
   border-radius: 24px;
-  background: rgba(14, 16, 23, 0.95);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 30px rgba(212, 175, 55, 0.15);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-gold);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.5), 0 0 30px var(--gold-glow);
   display: flex;
   flex-direction: column;
 }
@@ -53,7 +53,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-glass-card);
   border: 1px solid var(--border-subtle);
   color: var(--text-muted);
   display: flex;
@@ -64,8 +64,8 @@
 }
 
 .close-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
+  background: var(--bg-card-hover);
+  color: var(--text-main);
 }
 
 .close-btn svg {
@@ -181,7 +181,7 @@ canvas {
 .artifact-title {
   font-size: 1.4rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-main);
 }
 
 .artifact-title-en {
@@ -205,7 +205,7 @@ canvas {
   background: rgba(212, 175, 55, 0.12);
   border: 1px solid rgba(212, 175, 55, 0.3);
   border-radius: 12px;
-  color: var(--gold-200);
+  color: var(--gold-300);
   font-size: 0.88rem;
   font-weight: 500;
   cursor: pointer;
@@ -249,7 +249,7 @@ canvas {
 
 .full-desc {
   font-size: 0.92rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   line-height: 1.65;
 }
 
@@ -261,7 +261,7 @@ canvas {
 
 .spec-card {
   padding: 0.75rem;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--bg-card-hover);
   border: 1px solid var(--border-subtle);
   border-radius: 10px;
 }
@@ -275,7 +275,7 @@ canvas {
 .spec-value {
   display: block;
   font-size: 0.85rem;
-  color: #f1f5f9;
+  color: var(--text-main);
   font-weight: 500;
   margin-top: 0.2rem;
 }
@@ -304,24 +304,24 @@ canvas {
   align-items: center;
   gap: 0.4rem;
   padding: 0.35rem 0.75rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-card-hover);
   border: 1px solid var(--border-subtle);
   border-radius: 9999px;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .hotspot-chip:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  background: var(--bg-glass-card);
+  color: var(--text-main);
 }
 
 .hotspot-chip.active {
   background: rgba(212, 175, 55, 0.2);
   border-color: var(--gold-400);
-  color: var(--gold-200);
+  color: var(--gold-300);
 }
 
 .chip-dot {
@@ -347,7 +347,7 @@ canvas {
 
 .hotspot-detail-box p {
   font-size: 0.82rem;
-  color: #e2e8f0;
+  color: var(--text-main);
   line-height: 1.5;
 }
 

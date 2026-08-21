@@ -59,14 +59,14 @@
 }
 
 .tab-btn:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  background: var(--bg-card-hover);
 }
 
 .tab-btn.active {
   background: rgba(212, 175, 55, 0.2);
   border: 1px solid rgba(212, 175, 55, 0.4);
-  color: var(--gold-200);
+  color: var(--gold-300);
   font-weight: 600;
 }
 
@@ -135,7 +135,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #0d0f17;
+  background: var(--bg-surface);
   border: 3px solid var(--gold-400);
   box-shadow: 0 0 12px var(--gold-glow);
   z-index: 5;
@@ -155,12 +155,13 @@
   padding: 2.75rem 3rem;
   border-radius: 28px;
   border: 1px solid var(--border-subtle);
+  background: var(--bg-glass-card);
   transition: all 0.3s;
 }
 
 .era-block.active-block .era-main-card {
   border-color: var(--border-gold);
-  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.7), 0 0 25px rgba(212, 175, 55, 0.1);
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.2), 0 0 25px var(--gold-glow);
 }
 
 .era-card-header {
@@ -182,13 +183,13 @@
 .era-heading {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text-main);
   margin: 0.2rem 0;
 }
 
 .era-subheading {
   font-size: 0.95rem;
-  color: var(--gold-200);
+  color: var(--gold-300);
   font-weight: 500;
 }
 
@@ -200,7 +201,7 @@
   border-radius: 9999px;
   background: rgba(212, 175, 55, 0.12);
   border: 1px solid rgba(212, 175, 55, 0.3);
-  color: var(--gold-200);
+  color: var(--gold-300);
   font-size: 0.8rem;
   cursor: pointer;
   white-space: nowrap;
@@ -218,14 +219,14 @@
 
 .era-body-text {
   font-size: 0.95rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   line-height: 1.75;
   margin-bottom: 1.5rem;
 }
 
 /* Highlights Box */
 .highlights-box {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--bg-card-hover);
   border: 1px solid var(--border-subtle);
   border-radius: 14px;
   padding: 1.25rem;
@@ -248,7 +249,7 @@
 
 .highlights-list li {
   font-size: 0.88rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   position: relative;
   padding-left: 1.25rem;
 }
@@ -266,7 +267,7 @@
 .era-quote-strip {
   border-left: 3px solid var(--gold-400);
   padding: 0.75rem 1.25rem;
-  background: rgba(212, 175, 55, 0.05);
+  background: rgba(212, 175, 55, 0.08);
   border-radius: 0 12px 12px 0;
   margin-bottom: 1.75rem;
 }
@@ -274,7 +275,7 @@
 .quote-txt {
   font-size: 0.92rem;
   font-style: italic;
-  color: #f1f5f9;
+  color: var(--text-main);
   line-height: 1.6;
 }
 
@@ -364,15 +365,15 @@
 .layer-tag.left {
   left: 0.75rem;
   background: rgba(34, 197, 94, 0.2);
-  color: #4ade80;
+  color: #22c55e;
   border: 1px solid rgba(34, 197, 94, 0.4);
 }
 
 .layer-tag.right {
   right: 0.75rem;
-  background: rgba(255, 255, 255, 0.1);
-  color: #cbd5e1;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--bg-glass-card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
 }
 
 .photo-placeholder-content {
@@ -389,7 +390,7 @@
 .photo-title {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-main);
 }
 
 .compare-slider-input {
@@ -407,8 +408,8 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background: #ffffff;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  background: var(--text-main);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
   pointer-events: none;
   z-index: 10;
 }
@@ -421,14 +422,14 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: #ffffff;
-  color: #070709;
+  background: var(--text-main);
+  color: var(--bg-surface);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.8rem;
   font-weight: bold;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Related Artifacts */
@@ -456,6 +457,8 @@
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
+  background: var(--bg-card-hover);
+  border: 1px solid var(--border-subtle);
 }
 
 .mini-art-info {
@@ -466,7 +469,7 @@
 .mini-art-name {
   font-size: 0.88rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-main);
 }
 
 .mini-art-cat {

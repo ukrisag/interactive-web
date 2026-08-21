@@ -70,6 +70,34 @@
         }
       </button>
 
+      <!-- Dark / Light Mode Toggle -->
+      <button
+        (click)="themeService.toggleTheme()"
+        class="theme-toggle-btn"
+        [attr.aria-label]="themeService.currentTheme() === 'dark' ? 'เปลี่ยนเป็นโหมดสว่าง' : 'เปลี่ยนเป็นโหมดมืด'"
+        [title]="themeService.currentTheme() === 'dark' ? 'เปลี่ยนเป็นโหมดสว่าง (Light Mode)' : 'เปลี่ยนเป็นโหมดมืด (Dark Mode)'"
+      >
+        @if (themeService.currentTheme() === 'dark') {
+          <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+          </svg>
+          <span class="theme-label">สว่าง</span>
+        } @else {
+          <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"></path>
+          </svg>
+          <span class="theme-label">มืด</span>
+        }
+      </button>
+
       <!-- Mobile Hamburger Button -->
       <button class="mobile-menu-btn" (click)="toggleMobileMenu()" aria-label="เมนู">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -96,6 +124,17 @@
       <a routerLink="/games" (click)="closeMobileMenu()" class="mobile-nav-item">🎮 มินิเกมประวัติศาสตร์ (Mini-Games Hub)</a>
       <a routerLink="/survey" (click)="closeMobileMenu()" class="mobile-nav-item">⭐ แบบประเมินความพึงพอใจ</a>
       <a routerLink="/admin-dashboard" (click)="closeMobileMenu()" class="mobile-nav-item mobile-admin">📊 แผงสถิติผู้เข้าชม (KPI Admin Dashboard)</a>
+
+      <div class="mobile-theme-row">
+        <span class="mobile-theme-text">โหมดการแสดงผล</span>
+        <button (click)="themeService.toggleTheme()" class="mobile-theme-btn">
+          @if (themeService.currentTheme() === 'dark') {
+            ☀️ เปลี่ยนเป็นโหมดสว่าง
+          } @else {
+            🌙 เปลี่ยนเป็นโหมดมืด
+          }
+        </button>
+      </div>
     </div>
   }
 </header>

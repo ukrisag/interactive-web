@@ -3,7 +3,8 @@
    Virtual Exhibition: Queen Rambhai Barni | King Prajadhipok's Institute
    ========================================================================== */
 
-:root {
+:root,
+[data-theme="dark"] {
   /* Apple 2026 Dark Palette - Pure Obsidian, Graphite, Royal Gold & Apple Blue */
   --bg-obsidian: #000000;
   --bg-deep: #0a0a0c;
@@ -35,12 +36,58 @@
   --border-gold: rgba(212, 175, 55, 0.3);
   --border-gold-bright: rgba(212, 175, 55, 0.7);
 
+  --gradient-gold-text: linear-gradient(135deg, #ffffff 0%, #f7eccb 40%, #d4af37 100%);
+  --gradient-gold-subtle: linear-gradient(135deg, #fbf8eb 0%, #e2c15a 100%);
+  --body-bg-gradient: radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 30%, rgba(30, 58, 138, 0.05) 0%, transparent 50%);
+
+  --success-green: #4ade80;
   --font-thai: 'Prompt', 'Sarabun', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
   --font-en: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
   --font-royal: 'Cinzel', 'Times New Roman', serif;
 
   --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  /* Cozy Soft Sand & Muted Parchment Light Palette (Ultra Low Glare) */
+  --bg-obsidian: #e0d9cb;       /* Cozy Muted Sand Canvas Background (dramatically reduced glare) */
+  --bg-deep: #d5cebf;           /* Soft Muted Warm Base */
+  --bg-surface: #ffffff;        /* Crisp Pure White Cards (pop nicely on sand canvas) */
+  --bg-card: #fcfbfa;           /* Soft White Card */
+  --bg-card-hover: #f3eee3;     /* Warm Hover */
+  --bg-glass: rgba(255, 255, 255, 0.92);
+  --bg-glass-card: rgba(255, 255, 255, 0.95);
+
+  --gold-100: #3b2c05;
+  --gold-200: #543f07;
+  --gold-300: #785c0d;         /* Dignified Royal Warm Bronze Gold */
+  --gold-400: #967414;
+  --gold-500: #b89326;
+  --gold-600: #d4af37;
+  --gold-glow: rgba(184, 147, 38, 0.2);
+  --apple-blue: #0066cc;
+  --apple-blue-hover: #004499;
+  --success-green: #15803d;     /* Deep Emerald Green for high contrast readability in Light Mode */
+
+  --champagne: #615238;
+  --cream: #4a3e29;
+  --text-main: #23201d;         /* High-Contrast Charcoal Text */
+  --text-muted: #5e574f;        /* Deep Warm Slate */
+  --text-subtle: #7a7268;       /* Warm Stone */
+  --text-secondary: #3d3731;     /* Dark Sepia Slate */
+
+  --border-subtle: rgba(90, 80, 70, 0.22);
+  --border-card: #c8c0b0;       /* Distinct warm card border */
+  --border-gold: rgba(184, 147, 38, 0.5);
+  --border-gold-bright: rgba(184, 147, 38, 0.9);
+
+  --gradient-gold-text: linear-gradient(135deg, #23201d 0%, #785c0d 50%, #967414 100%);
+  --gradient-gold-subtle: linear-gradient(135deg, #3b2c05 0%, #785c0d 100%);
+  --body-bg-gradient: radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.12) 0%, transparent 60%), radial-gradient(ellipse at 80% 30%, rgba(210, 200, 180, 0.5) 0%, transparent 50%);
+
+  color-scheme: light;
 }
 
 /* Reset & Base Setup */
@@ -55,21 +102,20 @@ html {
   background-color: var(--bg-obsidian);
   color: var(--text-main);
   scroll-behavior: smooth;
-  color-scheme: dark;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s var(--ease-apple), color 0.3s var(--ease-apple);
 }
 
 body {
   min-height: 100vh;
   overflow-x: hidden;
   background-color: var(--bg-obsidian);
-  background-image: 
-    radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 30%, rgba(30, 58, 138, 0.05) 0%, transparent 50%);
+  background-image: var(--body-bg-gradient);
   background-attachment: fixed;
   font-size: 16px;
   line-height: 1.6;
+  transition: background-color 0.3s var(--ease-apple), color 0.3s var(--ease-apple);
 }
 
 /* Typography Helpers */
@@ -77,7 +123,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-thai);
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: #ffffff;
+  color: var(--text-main);
   line-height: 1.25;
 }
 
@@ -97,6 +143,7 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid var(--border-subtle);
   border-radius: 20px;
+  transition: background 0.3s var(--ease-apple), border-color 0.3s var(--ease-apple), box-shadow 0.3s var(--ease-apple);
 }
 
 .glass-card {
@@ -109,10 +156,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-card-hover);
   border-color: var(--border-gold);
   transform: translateY(-4px);
-  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.5), 0 0 20px -5px var(--gold-glow);
+  box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.15), 0 0 20px -5px var(--gold-glow);
 }
 
 .glass-card-interactive {
@@ -153,13 +200,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .gold-gradient-text {
-  background: linear-gradient(135deg, #ffffff 0%, #f7eccb 40%, #d4af37 100%);
+  background: var(--gradient-gold-text);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gold-gradient-subtle {
-  background: linear-gradient(135deg, #fbf8eb 0%, #e2c15a 100%);
+  background: var(--gradient-gold-subtle);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -199,8 +246,8 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   gap: 0.6rem;
   padding: 0.85rem 1.8rem;
-  background: rgba(255, 255, 255, 0.06);
-  color: #ffffff;
+  background: var(--bg-glass-card);
+  color: var(--text-main);
   font-weight: 500;
   font-size: 0.95rem;
   border-radius: 9999px;
@@ -212,8 +259,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.25);
+  background: var(--bg-card-hover);
+  border-color: var(--border-gold);
   transform: translateY(-2px);
 }
 
@@ -239,7 +286,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.08;
-  color: #f5f5f7;
+  color: var(--text-main);
 }
 
 .apple-subhead {
@@ -290,9 +337,9 @@ h1, h2, h3, h4, h5, h6 {
   gap: 0.5rem;
   padding: 12px 24px;
   border-radius: 980px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #f5f5f7;
+  background: var(--bg-glass-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
   font-weight: 500;
   font-size: 1rem;
   cursor: pointer;
@@ -302,8 +349,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-apple-secondary:hover {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: var(--bg-card-hover);
+  border-color: var(--border-gold);
   transform: scale(1.02);
 }
 
@@ -423,4 +470,47 @@ h1, h2, h3, h4, h5, h6 {
 .container-fluid {
   width: 100%;
   padding: 0 2rem;
+}
+
+/* Light Mode Card Elevation & Button High-Contrast Overrides */
+[data-theme="light"] .glass-panel,
+[data-theme="light"] .glass-card,
+[data-theme="light"] .apple-bento-card,
+[data-theme="light"] .monumental-frame,
+[data-theme="light"] .metric-bento-card,
+[data-theme="light"] .chapter-card-wrapper,
+[data-theme="light"] .artifact-bento-card,
+[data-theme="light"] .cinema-video-card,
+[data-theme="light"] .apple-quote-card,
+[data-theme="light"] .action-bento-card,
+[data-theme="light"] .era-main-card,
+[data-theme="light"] .survey-form-card,
+[data-theme="light"] .chart-section,
+[data-theme="light"] .heatmap-card,
+[data-theme="light"] .satisfaction-panel,
+[data-theme="light"] .items-checklist-panel,
+[data-theme="light"] .webgl-canvas-container,
+[data-theme="light"] .webgl-detective-container {
+  box-shadow: 0 10px 30px -4px rgba(45, 38, 30, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.05);
+  border-color: #d8d0be;
+}
+
+[data-theme="light"] .btn-secondary,
+[data-theme="light"] .btn-apple-secondary,
+[data-theme="light"] .sound-btn,
+[data-theme="light"] .theme-toggle-btn {
+  background: #ffffff;
+  border: 1px solid #c8bfab;
+  color: #23201d;
+  box-shadow: 0 3px 10px rgba(45, 38, 30, 0.08);
+}
+
+[data-theme="light"] .btn-secondary:hover,
+[data-theme="light"] .btn-apple-secondary:hover,
+[data-theme="light"] .sound-btn:hover,
+[data-theme="light"] .theme-toggle-btn:hover {
+  background: #f4eee0;
+  border-color: var(--gold-400);
+  color: #000000;
+  box-shadow: 0 6px 16px rgba(184, 147, 38, 0.28);
 }

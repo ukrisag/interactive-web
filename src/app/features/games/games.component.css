@@ -55,13 +55,13 @@
   font-weight: 600;
   padding: 0.3rem 0.8rem;
   border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.08);
-  color: #cbd5e1;
+  background: var(--bg-card-hover);
+  color: var(--text-secondary);
 }
 
 .rank-tag.gold {
   background: rgba(212, 175, 55, 0.2);
-  color: var(--gold-200);
+  color: var(--gold-300);
   border: 1px solid var(--border-gold);
 }
 
@@ -96,7 +96,7 @@
 }
 
 .game-tab-btn:hover {
-  color: #ffffff;
+  color: var(--text-main);
 }
 
 .game-tab-btn.active {
@@ -137,7 +137,7 @@
 .stat-num {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-main);
 }
 
 .text-gold {
@@ -155,7 +155,7 @@
   border-radius: 12px;
   padding: 0.85rem 1.25rem;
   font-size: 0.88rem;
-  color: #f1f5f9;
+  color: var(--text-main);
   margin-bottom: 1.75rem;
   line-height: 1.6;
 }
@@ -172,8 +172,8 @@
   border-radius: 28px;
   overflow: hidden;
   border: 1px solid var(--border-gold);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(212, 175, 55, 0.15);
-  background: #06070a;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3), 0 0 35px var(--gold-glow);
+  background: var(--bg-surface);
 }
 
 .webgl-canvas {
@@ -188,7 +188,7 @@
   top: 1rem;
   right: 1.25rem;
   padding: 0.35rem 0.8rem;
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--bg-glass);
   border: 1px solid var(--border-gold);
   border-radius: 9999px;
   font-size: 0.72rem;
@@ -204,7 +204,7 @@
   padding: 1.5rem 2rem;
   border-radius: 20px;
   border: 1px solid var(--border-gold);
-  background: rgba(14, 18, 28, 0.95);
+  background: var(--bg-surface);
   margin-top: 2rem;
   max-width: 1440px;
   margin-left: auto;
@@ -223,7 +223,7 @@
 
 .fact-desc {
   font-size: 0.92rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   line-height: 1.6;
 }
 
@@ -234,7 +234,7 @@
   border: 1px solid var(--border-gold);
   max-width: 1100px;
   margin: 2.5rem auto 0;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px var(--gold-glow);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 0 30px var(--gold-glow);
 }
 
 .victory-trophy {
@@ -245,7 +245,7 @@
 .victory-title {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text-main);
   margin-bottom: 0.5rem;
 }
 
@@ -287,8 +287,8 @@
   border-radius: 28px;
   overflow: hidden;
   border: 1px solid var(--border-gold);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(212, 175, 55, 0.15);
-  background: #0f172a;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3), 0 0 35px var(--gold-glow);
+  background: var(--bg-surface);
 }
 
 .detective-viewport-overlay {
@@ -307,7 +307,7 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.4rem 0.9rem;
-  background: rgba(0, 0, 0, 0.65);
+  background: var(--bg-glass);
   border: 1px solid var(--border-subtle);
   border-radius: 9999px;
   font-size: 0.75rem;
@@ -327,10 +327,10 @@
 
 .zoom-btn {
   padding: 0.4rem 0.85rem;
-  background: rgba(14, 18, 28, 0.85);
+  background: var(--bg-glass-card);
   border: 1px solid var(--border-gold);
   border-radius: 9999px;
-  color: #ffffff;
+  color: var(--text-main);
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
@@ -352,7 +352,7 @@
 .checklist-title {
   font-size: 1.05rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-main);
   margin-bottom: 0.25rem;
 }
 
@@ -379,7 +379,7 @@
 }
 
 .check-item-card:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--bg-card-hover);
 }
 
 .check-item-card.item-active-clue {
@@ -405,7 +405,7 @@
 .item-name {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-main);
 }
 
 .item-cat {
@@ -418,7 +418,7 @@
 }
 
 .found-tag {
-  color: #4ade80;
+  color: #22c55e;
   font-weight: 600;
 }
 
@@ -443,7 +443,7 @@
 
 .clue-body {
   font-size: 0.85rem;
-  color: #f1f5f9;
+  color: var(--text-secondary);
   line-height: 1.5;
   margin-top: 0.5rem;
 }
@@ -506,7 +506,7 @@
 .chron-title {
   font-size: 1.05rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-main);
 }
 
 .chron-year-badge {
@@ -520,7 +520,7 @@
 
 .chron-desc {
   font-size: 0.88rem;
-  color: #cbd5e1;
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 
@@ -534,9 +534,9 @@
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--bg-glass-card);
   border: 1px solid var(--border-subtle);
-  color: #ffffff;
+  color: var(--text-main);
   display: flex;
   align-items: center;
   justify-content: center;

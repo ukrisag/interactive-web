@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AudioService } from '../../../core/services/audio.service';
 import { AnalyticsService } from '../../../core/services/analytics.service';
+import { ThemeService } from '../../../core/services/theme.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -14,6 +15,7 @@ import { CommonModule } from '@angular/common';
 export class NavbarComponent {
   public readonly audioService = inject(AudioService);
   public readonly analyticsService = inject(AnalyticsService);
+  public readonly themeService = inject(ThemeService);
   public mobileMenuOpen = false;
 
   public toggleMobileMenu() {
@@ -24,3 +26,4 @@ export class NavbarComponent {
     this.mobileMenuOpen = false;
   }
 }
+

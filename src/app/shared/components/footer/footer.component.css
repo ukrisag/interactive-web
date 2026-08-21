@@ -1,8 +1,9 @@
 .kpi-footer {
   border-top: 1px solid var(--border-subtle);
-  background: #050608;
+  background: var(--bg-deep);
   padding: 4.5rem 0 2.5rem;
   margin-top: auto;
+  transition: background 0.3s var(--ease-apple);
 }
 
 .footer-top {
@@ -53,7 +54,7 @@
 .inst-th {
   font-size: 1rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-main);
 }
 
 .inst-en {
@@ -85,7 +86,7 @@
 .col-title {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-main);
   margin-bottom: 0.5rem;
 }
 

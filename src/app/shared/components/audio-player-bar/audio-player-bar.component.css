@@ -18,9 +18,9 @@
   gap: 1rem;
   padding: 0.6rem 1rem;
   border-radius: 9999px;
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.15);
-  background: rgba(14, 16, 23, 0.95);
+  border: 1px solid var(--border-gold);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25), 0 0 20px var(--gold-glow);
+  background: var(--bg-surface);
 }
 
 .audio-indicator {
@@ -56,7 +56,7 @@
 .audio-status-label {
   font-size: 0.78rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-main);
   white-space: nowrap;
 }
 
@@ -102,9 +102,9 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--bg-glass-card);
   border: 1px solid var(--border-subtle);
-  color: #ffffff;
+  color: var(--text-main);
   display: flex;
   align-items: center;
   justify-content: center;

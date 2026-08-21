@@ -4,12 +4,14 @@ import {
   ViewChild,
   AfterViewInit,
   OnDestroy,
-  inject
+  inject,
+  effect
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { AnalyticsService } from '../../core/services/analytics.service';
 import { SurveyService } from '../../core/services/survey.service';
+import { ThemeService } from '../../core/services/theme.service';
 
 Chart.register(...registerables);
 
@@ -26,10 +28,22 @@ export class AdminDashboardComponent implements AfterViewInit, OnDestroy {
 
   public readonly analyticsService = inject(AnalyticsService);
   public readonly surveyService = inject(SurveyService);
+  public readonly themeService = inject(ThemeService);
 
   public timeRange: 'daily' | 'monthly' | 'yearly' = 'daily';
   private visitorsChartInstance: Chart | null = null;
   private ratingsChartInstance: Chart | null = null;
+
+  constructor() {
+    effect(() => {
+      // Re-render charts when theme changes
+      const theme = this.themeService.currentTheme();
+      setTimeout(() => {
+        this.renderVisitorsChart();
+        this.renderRatingsRadarChart();
+      }, 50);
+    });
+  }
 
   ngAfterViewInit(): void {
     this.analyticsService.recordPageView('แผงสถิติผู้บริหาร (Admin Dashboard)');
@@ -60,6 +74,13 @@ export class AdminDashboardComponent implements AfterViewInit, OnDestroy {
     const ctx = this.visitorsCanvas.nativeElement.getContext('2d');
     if (!ctx) return;
 
+    const isLight = this.themeService.currentTheme() === 'light';
+    const gridColor = isLight ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.05)';
+    const tickColor = isLight ? '#5e574f' : '#94a3b8';
+    const tooltipBg = isLight ? 'rgba(255, 255, 255, 0.96)' : 'rgba(14, 16, 23, 0.95)';
+    const tooltipTitleColor = isLight ? '#23201d' : '#ffffff';
+    const tooltipBodyColor = isLight ? '#5e574f' : '#e2e8f0';
+
     let labels: string[] = [];
     let data: number[] = [];
     let labelTitle = '';
@@ -83,7 +104,7 @@ export class AdminDashboardComponent implements AfterViewInit, OnDestroy {
 
     // Gradient fill
     const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-    gradient.addColorStop(0, 'rgba(212, 175, 55, 0.4)');
+    gradient.addColorStop(0, isLight ? 'rgba(184, 147, 38, 0.3)' : 'rgba(212, 175, 55, 0.4)');
     gradient.addColorStop(1, 'rgba(212, 175, 55, 0.0)');
 
     this.visitorsChartInstance = new Chart(ctx, {
@@ -94,12 +115,12 @@ export class AdminDashboardComponent implements AfterViewInit, OnDestroy {
           {
             label: labelTitle,
             data,
-            borderColor: '#d4af37',
-            backgroundColor: this.timeRange === 'yearly' ? 'rgba(212, 175, 55, 0.6)' : gradient,
+            borderColor: isLight ? '#785c0d' : '#d4af37',
+            backgroundColor: this.timeRange === 'yearly' ? (isLight ? 'rgba(184, 147, 38, 0.7)' : 'rgba(212, 175, 55, 0.6)') : gradient,
             fill: true,
             tension: 0.35,
             pointBackgroundColor: '#ffffff',
-            pointBorderColor: '#d4af37',
+            pointBorderColor: isLight ? '#785c0d' : '#d4af37',
             pointRadius: 4,
             pointHoverRadius: 7,
             borderWidth: 2.5
@@ -114,11 +135,11 @@ export class AdminDashboardComponent implements AfterViewInit, OnDestroy {
             display: false
           },
           tooltip: {
-            backgroundColor: 'rgba(14, 16, 23, 0.95)',
-            borderColor: 'rgba(212, 175, 55, 0.4)',
+            backgroundColor: tooltipBg,
+            borderColor: isLight ? 'rgba(184, 147, 38, 0.6)' : 'rgba(212, 175, 55, 0.4)',
             borderWidth: 1,
-            titleColor: '#ffffff',
-            bodyColor: '#e2e8f0',
+            titleColor: tooltipTitleColor,
+            bodyColor: tooltipBodyColor,
             padding: 12,
             displayColors: false
           }
@@ -126,19 +147,19 @@ export class AdminDashboardComponent implements AfterViewInit, OnDestroy {
         scales: {
           x: {
             grid: {
-              color: 'rgba(255, 255, 255, 0.05)'
+              color: gridColor
             },
             ticks: {
-              color: '#94a3b8',
+              color: tickColor,
               font: { family: "'Prompt', sans-serif", size: 11 }
             }
           },
           y: {
             grid: {
-              color: 'rgba(255, 255, 255, 0.05)'
+              color: gridColor
             },
             ticks: {
-              color: '#94a3b8',
+              color: tickColor,
               font: { family: "'Plus Jakarta Sans', sans-serif", size: 11 }
             }
           }
@@ -156,6 +177,12 @@ export class AdminDashboardComponent implements AfterViewInit, OnDestroy {
     const ctx = this.ratingsCanvas.nativeElement.getContext('2d');
     if (!ctx) return;
 
+    const isLight = this.themeService.currentTheme() === 'light';
+    const gridColor = isLight ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.08)';
+    const tickColor = isLight ? '#5e574f' : '#64748b';
+    const labelColor = isLight ? '#23201d' : '#e2e8f0';
+    const chartLineColor = isLight ? '#0284c7' : '#38bdf8';
+
     const avg = this.surveyService.averageRatings();
 
     this.ratingsChartInstance = new Chart(ctx, {
@@ -171,10 +198,10 @@ export class AdminDashboardComponent implements AfterViewInit, OnDestroy {
           {
             label: 'คะแนนเฉลี่ย (เต็ม 5)',
             data: [avg.content, avg.interactivity, avg.visual, avg.ease],
-            borderColor: '#38bdf8',
-            backgroundColor: 'rgba(56, 189, 248, 0.25)',
+            borderColor: chartLineColor,
+            backgroundColor: isLight ? 'rgba(2, 132, 199, 0.2)' : 'rgba(56, 189, 248, 0.25)',
             pointBackgroundColor: '#ffffff',
-            pointBorderColor: '#38bdf8',
+            pointBorderColor: chartLineColor,
             borderWidth: 2
           }
         ]
@@ -191,18 +218,18 @@ export class AdminDashboardComponent implements AfterViewInit, OnDestroy {
             max: 5,
             ticks: {
               stepSize: 1,
-              color: '#64748b',
+              color: tickColor,
               backdropColor: 'transparent'
             },
             grid: {
-              color: 'rgba(255, 255, 255, 0.08)'
+              color: gridColor
             },
             angleLines: {
-              color: 'rgba(255, 255, 255, 0.08)'
+              color: gridColor
             },
             pointLabels: {
-              color: '#e2e8f0',
-              font: { family: "'Prompt', sans-serif", size: 11 }
+              color: labelColor,
+              font: { family: "'Prompt', sans-serif", size: 11, weight: 'bold' }
             }
           }
         }

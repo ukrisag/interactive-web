@@ -33,7 +33,7 @@
 .section-label {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-main);
   margin-bottom: 1.25rem;
 }
 
@@ -56,14 +56,14 @@
   gap: 0.75rem;
   padding: 1rem 1.25rem;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--bg-card-hover);
   border: 1px solid var(--border-subtle);
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .radio-card:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--bg-glass-card);
 }
 
 .radio-card.checked {
@@ -73,7 +73,7 @@
 
 .radio-title {
   font-size: 0.92rem;
-  color: #ffffff;
+  color: var(--text-main);
   font-weight: 500;
 }
 
@@ -108,7 +108,7 @@
 .rating-title {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text-main);
 }
 
 .rating-sub {
@@ -126,7 +126,7 @@
   background: transparent;
   border: none;
   font-size: 1.6rem;
-  color: #334155;
+  color: var(--text-subtle);
   cursor: pointer;
   transition: transform 0.15s, color 0.15s;
   padding: 0 0.15rem;
@@ -154,10 +154,10 @@
 .custom-select {
   width: 100%;
   padding: 0.9rem 1.25rem;
-  background: rgba(14, 16, 23, 0.9);
+  background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: 12px;
-  color: #ffffff;
+  color: var(--text-main);
   font-size: 0.95rem;
   outline: none;
   cursor: pointer;
@@ -199,10 +199,10 @@
 .custom-textarea {
   width: 100%;
   padding: 1rem 1.25rem;
-  background: rgba(14, 16, 23, 0.9);
+  background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: 14px;
-  color: #ffffff;
+  color: var(--text-main);
   font-family: inherit;
   font-size: 0.92rem;
   line-height: 1.6;
@@ -244,7 +244,7 @@
 .thankyou-title {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text-main);
   margin-bottom: 0.75rem;
 }
 

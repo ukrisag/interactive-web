@@ -24,11 +24,11 @@
 .video-modal-container {
   width: 100%;
   max-width: 1040px;
-  background: #121214;
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-gold);
   border-radius: 28px;
   overflow: hidden;
-  box-shadow: 0 35px 80px -15px rgba(0, 0, 0, 0.95), 0 0 40px rgba(212, 175, 55, 0.2);
+  box-shadow: 0 35px 80px -15px rgba(0, 0, 0, 0.5), 0 0 40px var(--gold-glow);
   display: flex;
   flex-direction: column;
   animation: scaleUp 0.3s var(--ease-apple);
@@ -44,8 +44,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem 1.75rem;
-  background: #161618;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .header-left {
@@ -66,7 +66,7 @@
   font-family: var(--font-thai);
   font-size: 1.25rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text-main);
   margin: 0;
 }
 
@@ -74,9 +74,9 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #ffffff;
+  background: var(--bg-glass-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,7 +87,7 @@
 .btn-close-modal:hover {
   background: rgba(212, 175, 55, 0.25);
   border-color: var(--gold-300);
-  color: var(--gold-200);
+  color: var(--gold-300);
   transform: scale(1.08);
 }
 
@@ -110,8 +110,8 @@
 
 .video-modal-footer {
   padding: 1.25rem 1.75rem;
-  background: #161618;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--bg-card);
+  border-top: 1px solid var(--border-subtle);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
